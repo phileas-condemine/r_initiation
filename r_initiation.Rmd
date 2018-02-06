@@ -1,4 +1,4 @@
-ï»¿---
+---
 title: "Formation R initiation"
 output:
   html_document:
@@ -6,77 +6,77 @@ output:
 ---
 
 
-**Quâ€™est ce que R ?**
+**Qu'est ce que R ?**
 
-R (https://www.r-project.org/) est un langage de programmation dÃ©diÃ© Ã  lâ€™analyse statistique. Libre et gratuit, disponible sur toutes les plateformes (Mac OS, Windows, Linux), il sâ€™est largement imposÃ© ces derniÃ¨res annÃ©es dans le domaine des sciences humaines. R dispose par dÃ©faut dâ€™instructions de base permettant de rÃ©aliser les opÃ©rations les plus courantes. De nouvelles fonctionnalitÃ©s, regroupÃ©es en packages, peuvent Ãªtre facilement ajoutÃ©es pour venir enrichir les possibilitÃ©s du langage. Le point fort de R par rapport Ã  des logiciels Ã  interfaces graphiques, est quâ€™il permet trÃ¨s facilement lâ€™automatisation et la reproductibilitÃ© des traitements.
+R (https://www.r-project.org/) est un langage de programmation dédié à l'analyse statistique. Libre et gratuit, disponible sur toutes les plateformes (Mac OS, Windows, Linux), il s'est largement imposé ces dernières années dans le domaine des sciences humaines. R dispose par défaut d'instructions de base permettant de réaliser les opérations les plus courantes. De nouvelles fonctionnalités, regroupées en packages, peuvent être facilement ajoutées pour venir enrichir les possibilités du langage. Le point fort de R par rapport à des logiciels à interfaces graphiques, est qu'il permet très facilement l'automatisation et la reproductibilité des traitements.
 
 **Environnement de travail**
 
-Rstudio (https://www.rstudio.com/) est un environnement de travail permettant dâ€™Ã©crire du code R. Il ne sâ€™agit pas dâ€™un environnement clic bouton mais dâ€™une vÃ©ritable interface de dÃ©veloppement (IDE) destinÃ© Ã  Ã©crire du code. Il sâ€™agit en fait dâ€™une couche logiciel permettant dâ€™Ã©crire, dâ€™exÃ©cuter et de visualiser les rÃ©sultats dâ€™un programme Ã©crit dans le langage R. RStudio nâ€™est pas indispensable pour utiliser R. NÃ©anmoins,  il est trÃ¨s pratique et trÃ¨s bien fait.  [En savoir plus].
+Rstudio (https://www.rstudio.com/) est un environnement de travail permettant d'écrire du code R. Il ne s'agit pas d'un environnement clic bouton mais d'une véritable interface de développement (IDE) destiné à écrire du code. Il s'agit en fait d'une couche logiciel permettant d'écrire, d'exécuter et de visualiser les résultats d'un programme écrit dans le langage R. RStudio n'est pas indispensable pour utiliser R. Néanmoins,  il est très pratique et très bien fait.  [En savoir plus].
 
-Le menu Session > Set Working Directory permet de sÃ©lectionner le rÃ©pertoire par dÃ©faut contenant vos scripts et Ã©ventuels fichiers de donnÃ©es.
-Vous pouvez Ã©galement le modifier via une ligne de code :
+Le menu Session > Set Working Directory permet de sélectionner le répertoire par défaut contenant vos scripts et éventuels fichiers de données.
+Vous pouvez également le modifier via une ligne de code :
 
 ```{r message=FALSE, warning=FALSE}
 setwd('C:/Users/Stephanie/Desktop/R_initiation')
 ```
 
-Dans Rstudio pour compiler une ligne, vous pouvez placer le curseur dessus et cliquer sur Run, ou bien utiliser le raccourci clavier ctrl+entrÃ©e
+Dans Rstudio pour compiler une ligne, vous pouvez placer le curseur dessus et cliquer sur Run, ou bien utiliser le raccourci clavier ctrl+entrée
 
-# OpÃ©rations de base
+# Opérations de base
 
-Sous R, les Ã©lÃ©ments de base sont des objets : vecteurs, matrices, listes, table ...
-Ces objets peuvent contenir des Ã©lÃ©ments de type numÃ©rique, boolÃ©en (logical : TRUE, FALSE), chaÃ®ne de caractÃ¨re (string), facteur (factor, pour les variables qualitatives prenant un nombre dÃ©terminÃ© de modalitÃ©). 
-La diffÃ©rence entre la table de donnÃ©es (data.frame) et la matrice est tient notamment dans le fait que la premiÃ¨re peut contenir des Ã©lÃ©ments mixtes. 
+Sous R, les éléments de base sont des objets : vecteurs, matrices, listes, table ...
+Ces objets peuvent contenir des éléments de type numérique, booléen (logical : TRUE, FALSE), chaîne de caractère (string), facteur (factor, pour les variables qualitatives prenant un nombre déterminé de modalité). 
+La différence entre la table de données (data.frame) et la matrice est tient notamment dans le fait que la première peut contenir des éléments mixtes. 
 
-### Objets et opÃ©rations simples
+### Objets et opérations simples
 
-On commence par crÃ©er des Ã©lÃ©ments pour illustrer les opÃ©rations de base en R. Le signe `<-` permet d'assigner un contenu Ã  une variable dont on indique le nom Ã  gauche.
+On commence par créer des éléments pour illustrer les opérations de base en R. Le signe `<-` permet d'assigner un contenu à une variable dont on indique le nom à gauche.
 
 ```{r message=FALSE, warning=FALSE}
 element_a <- 2
 element_a
 element_b <- 3
 element_b
-element_c <- element_a/2 + 2*element_b # les opÃ©rations -, *, /, sqrt pour racine, ^ pour puissance, log, exp, sont Ã©galement possibles !
+element_c <- element_a/2 + 2*element_b # les opérations -, *, /, sqrt pour racine, ^ pour puissance, log, exp, sont également possibles !
 element_c
 ```
 
-On peut travailler trÃ¨s naturellement sur des vecteurs 
+On peut travailler très naturellement sur des vecteurs 
 
 ```{r message=FALSE, warning=FALSE}
 vecteur_a <- c(2,3,5) 
 vecteur_a
 ```
 
-On peut rÃ©cupÃ©rer un Ã©lÃ©ment d'un vecteur avec l'opÃ©rateur `[`
+On peut récupérer un élément d'un vecteur avec l'opérateur `[`
 
 ```{r message=FALSE, warning=FALSE}
 vecteur_a
-vecteur_a[1] #on commence Ã  numÃ©roter Ã  partir de 1 (et non de zÃ©ro)
+vecteur_a[1] #on commence à numéroter à partir de 1 (et non de zéro)
 vecteur_a[c(1,3)]
 ```
 
-Dans le cas oÃ¹ le vecteur correspond Ã  une sÃ©quence de nombres, on peut utiliser une syntaxe particuliÃ¨re
+Dans le cas où le vecteur correspond à une séquence de nombres, on peut utiliser une syntaxe particulière
 
 ```{r message=FALSE, warning=FALSE}
 vecteur_a <- c(2,3,4) 
 vecteur_b <- 2:4
-vecteur_c <- seq(2,4,1) # les arguments de la fonction seq (sÃ©quence) correspondent Ã  from, to, by (Ã  partir de 1, jusqu'Ã  10, avec des Ã©carts de 2)
+vecteur_c <- seq(2,4,1) # les arguments de la fonction seq (séquence) correspondent à from, to, by (à partir de 1, jusqu'à 10, avec des écarts de 2)
 
-vecteur_a == vecteur_b # compare les Ã©lÃ©ments un Ã  un
+vecteur_a == vecteur_b # compare les éléments un à un
 variable_logique_a <- vecteur_a == vecteur_b
 ```
 
-Les opÃ©rations sur les vecteurs sont trÃ¨s proches des opÃ©rations sur les Ã©lÃ©ments. Une opÃ©ration entre un vecteur a et un vecteur b revient Ã  rÃ©aliser l'opÃ©ration entre les couples d'Ã©lÃ©ments issus des deux vecteurs et situÃ©s Ã  la mÃªme place (il faut que les vecteurs admettent la mÃªme taille pour que Ã§a ait un sens)
+Les opérations sur les vecteurs sont très proches des opérations sur les éléments. Une opération entre un vecteur a et un vecteur b revient à réaliser l'opération entre les couples d'éléments issus des deux vecteurs et situés à la même place (il faut que les vecteurs admettent la même taille pour que ça ait un sens)
 
 
 ```{r message=FALSE, warning=FALSE}
-vecteur_c <- 2*vecteur_c # on Ã©crase la valeur du vecteur_c
-vecteur_c + vecteur_a/2 # exemple d'opÃ©ration entre deux vecteurs
+vecteur_c <- 2*vecteur_c # on écrase la valeur du vecteur_c
+vecteur_c + vecteur_a/2 # exemple d'opération entre deux vecteurs
 ```
 
-Pour concatÃ©ner deux vecteurs, on fera tout simplement 
+Pour concaténer deux vecteurs, on fera tout simplement 
 ```{r message=FALSE, warning=FALSE}
 vecteur_a
 vecteur_b
@@ -85,13 +85,13 @@ vecteur_d
 ```
 
 
-Le vecteur est caractÃ©risÃ© notamment par sa taille 
+Le vecteur est caractérisé notamment par sa taille 
 
 ```{r message=FALSE, warning=FALSE}
 length(vecteur_a)
 ```
 
-Il peut-Ãªtre triÃ© :
+Il peut-être trié :
 
 ```{r message=FALSE, warning=FALSE}
 vecteur_d <- c(3,2,1)
@@ -107,14 +107,14 @@ liste_a <- list(2,3,5)
 liste_a
 liste_a[[2]]
 liste_b <- list(sexe = 2, age = 3, salaire = 5)
-liste_b$salaire # si on donne des noms aux Ã©lÃ©ments de la liste, on peut les rÃ©cupÃ©rer via l'opÃ©rateur $
+liste_b$salaire # si on donne des noms aux éléments de la liste, on peut les récupérer via l'opérateur $
 ```
 
-Pour concatÃ©ner deux listes 
+Pour concaténer deux listes 
 
 ```{r message=FALSE, warning=FALSE}
 liste_a
-append(liste_a, element_a) # ou liste_b Ã  la place de element_a pour concatÃ©ner deux listes
+append(liste_a, element_a) # ou liste_b à la place de element_a pour concaténer deux listes
 liste_a
 ```
 
@@ -135,25 +135,25 @@ unlist(liste_a)
 Pour les matrices : 
 
 ```{r message=FALSE, warning=FALSE}
-matrice_a <- matrix(1:15,ncol=5) # exemple d'une matrice remplie des chiffres consÃ©cutifs de 1 Ã  15 rangÃ©s sur 5 colonnes 
+matrice_a <- matrix(1:15,ncol=5) # exemple d'une matrice remplie des chiffres consécutifs de 1 à 15 rangés sur 5 colonnes 
 matrice_a
-head(matrice_a) # la fonction head permet de visualiser un extrait des donnÃ©es, ici elles sont petites donc c'est la totalitÃ©
-matrice_a[1,2] # pour rÃ©cupÃ©rer l'Ã©lÃ©ment de la premiÃ¨re ligne et de la deuxiÃ¨me colonne 
+head(matrice_a) # la fonction head permet de visualiser un extrait des données, ici elles sont petites donc c'est la totalité
+matrice_a[1,2] # pour récupérer l'élément de la première ligne et de la deuxième colonne 
 ```
 
-Par dÃ©faut, les opÃ©rations mathÃ©matiques simples se font Ã©lÃ©ment par Ã©lÃ©ment 
+Par défaut, les opérations mathématiques simples se font élément par élément 
 
 ```{r message=FALSE, warning=FALSE}
 matrice_b <- 2*matrice_a
 matrice_a
 matrice_b
-matrice_b - matrice_a # les opÃ©rations se font Ã©lÃ©ments par Ã©lÃ©ment
+matrice_b - matrice_a # les opérations se font éléments par élément
 
-t(matrice_b)%*% matrice_a # pour faire des vrais produits matriciels, on utilise l'opÃ©rateur %*%, ici t() indique que l'on prend Ã©galement la transposÃ©e
+t(matrice_b)%*% matrice_a # pour faire des vrais produits matriciels, on utilise l'opérateur %*%, ici t() indique que l'on prend également la transposée
 ``` 
 
 
-Pour concatÃ©ner deux matrices, on peut soit les mettre cÃ´te Ã  cÃ´te (`cbind`), soit les empiler (`rbind`). Ces fonctions fonctionnent aussi pour les data.frames.
+Pour concaténer deux matrices, on peut soit les mettre côte à côte (`cbind`), soit les empiler (`rbind`). Ces fonctions fonctionnent aussi pour les data.frames.
 
 ```{r message=FALSE, warning=FALSE}
 matrice_c <- cbind(matrice_a, matrice_b)
@@ -164,7 +164,7 @@ matrice_d
 dim(matrice_d)
 ``` 
 
-Les dimensions de la matrice peuvent Ãªtre obtenues de la maniÃ¨re suivante :
+Les dimensions de la matrice peuvent être obtenues de la manière suivante :
 
 ```{r message=FALSE, warning=FALSE}
 nrow(matrice_a)
@@ -172,29 +172,29 @@ ncol(matrice_a)
 dim(matrice_a)
 ```
 
-Les tables de donnÃ©es ou data.frame est sans doute le format qu'on utilisera le plus dans la suite. 
+Les tables de données ou data.frame est sans doute le format qu'on utilisera le plus dans la suite. 
 
 ```{r message=FALSE, warning=FALSE}
-df_a <- as.data.frame(matrice_a) # on commence par transformer la matrice en data.frame, l'opÃ©ration symÃ©trique as.matrix() est possible
+df_a <- as.data.frame(matrice_a) # on commence par transformer la matrice en data.frame, l'opération symétrique as.matrix() est possible
 head(df_a) 
-names(df_a) # ici le data.frame provient de la conversion d'une matrice, il n'y a donc pas de noms de colonnes Ã  part ceux qui sont donnÃ©s par dÃ©faut V1, V2...
+names(df_a) # ici le data.frame provient de la conversion d'une matrice, il n'y a donc pas de noms de colonnes à part ceux qui sont donnés par défaut V1, V2...
 names(df_a) <- c('a','b','c','d','e') # on peut changer le nom des colonnes simplement
 ```
 
-Pour rÃ©cupÃ©rer de l'information dans la table de donnÃ©es, on peut procÃ©der de diffÃ©rentes maniÃ¨res 
+Pour récupérer de l'information dans la table de données, on peut procéder de différentes manières 
 
 ```{r message=FALSE, warning=FALSE}
-df_a$b # avec l'opÃ©rateur $, on peut rÃ©cupÃ©rer directement la colonne b
-df_a[['b']] # revient au mÃªme
-df_a[[2]] # correspond Ã©galement car il s'agit de la 2e colonne
+df_a$b # avec l'opérateur $, on peut récupérer directement la colonne b
+df_a[['b']] # revient au même
+df_a[[2]] # correspond également car il s'agit de la 2e colonne
 df_a$e <- 1 # permet de construire une nouvelle colonne e remplie de 1 
 head(df_a)
-df_a$f <- df_a$a + df_a$b # permet de construire une nouvelle colonne qui serait la somme des deux premiÃ¨res, les opÃ©ration -, *, /, sqrt pour racine carrÃ©e, log, exp, ^, sont Ã©galement possibles ! 
+df_a$f <- df_a$a + df_a$b # permet de construire une nouvelle colonne qui serait la somme des deux premières, les opération -, *, /, sqrt pour racine carrée, log, exp, ^, sont également possibles ! 
 head(df_a)
-df_a$f <- sqrt(df_a$a) + df_a$b^2 # permet de construire une nouvelle colonne qui serait la somme des deux premiÃ¨res, les opÃ©ration -, *, /, sqrt pour racine 
+df_a$f <- sqrt(df_a$a) + df_a$b^2 # permet de construire une nouvelle colonne qui serait la somme des deux premières, les opération -, *, /, sqrt pour racine 
 ```
 
-VÃ©rifions le type de ces objets avec la fonction `class`
+Vérifions le type de ces objets avec la fonction `class`
 
 ```{r message=FALSE, warning=FALSE}
 class(element_a)
@@ -205,7 +205,7 @@ class(matrice_a)
 class(df_a)
 ```
 
-Nous avons crÃ©Ã© un certain nombre de variables qui sont disponibles dans votre environnement (gÃ©nÃ©ralement en haut Ã  droite par dÃ©faut)
+Nous avons créé un certain nombre de variables qui sont disponibles dans votre environnement (généralement en haut à droite par défaut)
 On peut aussi utiliser la fonction `ls` pour voir la liste des objets dont on dispose, et `rm` pour en supprimer.
 
 ```{r message=FALSE, warning=FALSE}
@@ -217,13 +217,13 @@ ls()
 
 ### Boucle, condition
  
-Reprenons le cas oÃ¹ on a un data.frame simple. On veut calculer la moyenne, la somme, le maximum et le minimum de chaque colonne.  
-Une maniÃ¨re de le faire serait de faire une boucle sur le nombre de colonnes et d'appliquer la fonction `mean`, `sum`, `max`, `min`, Ã  chaque colonne tour Ã  tour.
+Reprenons le cas où on a un data.frame simple. On veut calculer la moyenne, la somme, le maximum et le minimum de chaque colonne.  
+Une manière de le faire serait de faire une boucle sur le nombre de colonnes et d'appliquer la fonction `mean`, `sum`, `max`, `min`, à chaque colonne tour à tour.
 
 
 ```{r message=FALSE, warning=FALSE}
 nb_col <- ncol(df_a) 
-mean_col <- NULL # on commence par crÃ©er une variable vide, dans laquelle on va ajouter itÃ©rativement les moyenne de chaque colonne
+mean_col <- NULL # on commence par créer une variable vide, dans laquelle on va ajouter itérativement les moyenne de chaque colonne
 
 for (i in 1:nb_col){
   print(i)
@@ -235,15 +235,15 @@ for (i in 1:nb_col){
 }
 ``` 
 
-En rÃ©alitÃ©, les boucles sont Ã  Ã©viter en R, elles ne sont pas efficaces, on leur prÃ©fÃ©rera la fonction `lapply` qui distribue la fonction souhaitÃ©e sur chaque Ã©lÃ©ment d'une liste. Un data.frame peut-Ãªtre vu comme une liste de vecteurs. 
+En réalité, les boucles sont à éviter en R, elles ne sont pas efficaces, on leur préférera la fonction `lapply` qui distribue la fonction souhaitée sur chaque élément d'une liste. Un data.frame peut-être vu comme une liste de vecteurs. 
 
 ```{r message=FALSE, warning=FALSE}
-mean_col <- lapply(df_a, mean) # ici la fonction est particuliÃ¨rement simple car mean est dÃ©jÃ  une fonction R
-mean_col <- sapply(df_a, mean) # sapply procÃ¨de de mÃªme mais renvoie un vecteur
+mean_col <- lapply(df_a, mean) # ici la fonction est particulièrement simple car mean est déjà une fonction R
+mean_col <- sapply(df_a, mean) # sapply procède de même mais renvoie un vecteur
 mean_col
 ```
 
-Admettons qu'on cherche Ã  appliquer une fonction personnalisÃ©e 
+Admettons qu'on cherche à appliquer une fonction personnalisée 
 
 ```{r message=FALSE, warning=FALSE}
 mean_personnalisee <- function(vect){
@@ -257,7 +257,7 @@ mean_col <- sapply(df_a, function(vect) mean_personnalisee(vect))
 mean_col
 ```
 
-AppliquÃ©e sur un vecteur, `lapply` le convertit en liste, on peut repasser Ã  un format vecteur avec la fonction `unlist`
+Appliquée sur un vecteur, `lapply` le convertit en liste, on peut repasser à un format vecteur avec la fonction `unlist`
 
 ```{r message=FALSE, warning=FALSE}
 fonction_personnalisee <- function(x){
@@ -270,18 +270,18 @@ vecteur_a_transforme <- lapply(vecteur_a, function(x) fonction_personnalisee(x))
 class(vecteur_a_transforme)
 vecteur_a_transforme
 unlist(vecteur_a_transforme)
-vecteur_a*log(vecteur_a) # aurait marchÃ© aussi !
+vecteur_a*log(vecteur_a) # aurait marché aussi !
 ```
 
-`apply` s'applique aussi Ã  des matrices, on indique alors si la fonction Ã  distribuer doit Ãªtre distribuÃ©e en ligne ou en colonne 
+`apply` s'applique aussi à des matrices, on indique alors si la fonction à distribuer doit être distribuée en ligne ou en colonne 
 
 ```{r message=FALSE, warning=FALSE}
 matrice_a
-apply(matrice_a,1,sum) # ici on applique la fonction somme, autrement dit on somme les Ã©lÃ©ments par ligne
+apply(matrice_a,1,sum) # ici on applique la fonction somme, autrement dit on somme les éléments par ligne
 apply(matrice_a,2,sum) # par colonne
 ```
 
-La syntaxe de la condition est trÃ¨s proche de celle de la boucle, sauf que l'on remplace `for` par `if`
+La syntaxe de la condition est très proche de celle de la boucle, sauf que l'on remplace `for` par `if`
 
 ```{r message=FALSE, warning=FALSE}
 fonction_personnalisee <- function(x){
@@ -294,42 +294,42 @@ fonction_personnalisee <- function(x){
 ```{r message=FALSE, warning=FALSE}
 vecteur_d <- c(0,-1,2)
 sapply(vecteur_d, function(x) fonction_personnalisee(x))
-abs(vecteur_d) # rmq : abs permet de passer un Ã©lÃ©ment en valeur absolue (s'applique Ã©galement aux vecteurs sans recours Ã  lapply)
+abs(vecteur_d) # rmq : abs permet de passer un élément en valeur absolue (s'applique également aux vecteurs sans recours à lapply)
 ```
 
-Ici on a inclus la condition dans une fonction, mais ce n'est pas indispensable ! On peut vouloir aussi tester la diffÃ©rence `!=` plutÃ´t que l'Ã©galitÃ©, '<' ou '>', et si on a plusieurs conditions, on mettra chacune entre parenthÃ¨se et on utilisera `|` pour dire "ou" et `&` pour dire "et" (par exemple `(b-3==a) & (b>=a)`).
+Ici on a inclus la condition dans une fonction, mais ce n'est pas indispensable ! On peut vouloir aussi tester la différence `!=` plutôt que l'égalité, '<' ou '>', et si on a plusieurs conditions, on mettra chacune entre parenthèse et on utilisera `|` pour dire "ou" et `&` pour dire "et" (par exemple `(b-3==a) & (b>=a)`).
 
-Parfois, on n'a pas besoin de passer par `if` pour appliquer une condition, par exemple si on veut rÃ©cupÃ©rer seulement les Ã©lÃ©ments de vecteur_d supÃ©rieurs ou Ã©gaux Ã  0. Cela revient Ã  dire qu'on teste la condition sur chaque Ã©lÃ©ment et qu'on conserve vecteur_d[i] pour i tel que vecteur_d[i]>=0
+Parfois, on n'a pas besoin de passer par `if` pour appliquer une condition, par exemple si on veut récupérer seulement les éléments de vecteur_d supérieurs ou égaux à 0. Cela revient à dire qu'on teste la condition sur chaque élément et qu'on conserve vecteur_d[i] pour i tel que vecteur_d[i]>=0
  
 ```{r message=FALSE, warning=FALSE}
 vecteur_d
 vecteur_d[vecteur_d>=0]
 ```
 
-Et Ã§a fonctionne aussi avec les data.frames
+Et ça fonctionne aussi avec les data.frames
 
 ```{r message=FALSE, warning=FALSE}
-df_a[df_a$a>2] # on ne garde que les colonnes qui vÃ©rifient cette condition
+df_a[df_a$a>2] # on ne garde que les colonnes qui vérifient cette condition
 ```
 
-### Le type chaÃ®ne de caractÃ¨re 
+### Le type chaîne de caractère 
 
-Il arrive que les objets que l'on manipule ne soit pas numÃ©riques, on parle alors de `character` ou de `factor`. C'est le cas par exemple des noms de colonnes de `df_a`
+Il arrive que les objets que l'on manipule ne soit pas numériques, on parle alors de `character` ou de `factor`. C'est le cas par exemple des noms de colonnes de `df_a`
 
 ```{r message=FALSE, warning=FALSE}
 class(names(df_a))
 ```
 
-On peut aussi rÃ©aliser des opÃ©rations, par exemple de concatÃ©nation. Imaginons que l'on souhaite prÃ©ciser les noms de colonnes en indiquant qu'il s'agit de dÃ©partement.  
+On peut aussi réaliser des opérations, par exemple de concaténation. Imaginons que l'on souhaite préciser les noms de colonnes en indiquant qu'il s'agit de département.  
 
 ```{r message=FALSE, warning=FALSE}
 paste('departement','test',sep='_')
 paste(rep('departement',5), names(df_a),sep='_') 
-names(df_a) <- paste(rep('departement',5), names(df_a),sep='_') # revient Ã  faire apply de paste sur tous les Ã©lÃ©ments du vecteur names(df_a)
-rep('departement',5) # rep est la fonction qui permet de crÃ©er des vecteurs d'une taille donnÃ©e contenant toujours le mÃªme Ã©lÃ©ment qui pourrait Ãªtre numÃ©rique
+names(df_a) <- paste(rep('departement',5), names(df_a),sep='_') # revient à faire apply de paste sur tous les éléments du vecteur names(df_a)
+rep('departement',5) # rep est la fonction qui permet de créer des vecteurs d'une taille donnée contenant toujours le même élément qui pourrait être numérique
 ```
 
-On peut rÃ©cupÃ©rer une partie d'une chaine de caractÃ¨re simplement 
+On peut récupérer une partie d'une chaine de caractère simplement 
 
 ```{r message=FALSE, warning=FALSE}
 character_a <- 'departement_a' 
@@ -339,13 +339,13 @@ strsplit(character_a,'_')
 strsplit(character_a,'_')[[1]][[2]]
 ```
 
-La taille d'une chaine de caractÃ¨res correspond au nombre de caractÃ¨res 
+La taille d'une chaine de caractères correspond au nombre de caractères 
 
 ```{r message=FALSE, warning=FALSE}
 nchar(character_a)
 ```
 
-Les facteurs correspondent aux modalitÃ©s d'une variable qualitative. 
+Les facteurs correspondent aux modalités d'une variable qualitative. 
 
 ```{r message=FALSE, warning=FALSE}
 col_df_a <- names(df_a)
@@ -355,19 +355,19 @@ class(col_df_a)
 class(col_df_a_fact)
 ```
 
-On ne peut pas rajouter un Ã©lÃ©ment qui n'est pas dans la liste des facteurs naÃ¯vement 
+On ne peut pas rajouter un élément qui n'est pas dans la liste des facteurs naïvement 
 
 ```{r message=FALSE, warning=FALSE}
 levels(col_df_a_fact)
 col_df_a_fact <- c(col_df_a_fact, 'departement_z')
-class(col_df_a_fact) # attention cette opÃ©ration a converti col_df_a_fact en character
+class(col_df_a_fact) # attention cette opération a converti col_df_a_fact en character
 col_df_a_fact 
 levels(col_df_a_fact) 
 col_df_a_fact <- as.factor(col_df_a)
-as.character(col_df_a_fact) # parfois on prÃ©fÃ¨re revenir aux chaines de caractÃ¨res pour Ã©viter ce type de problÃ¨mes 
+as.character(col_df_a_fact) # parfois on préfère revenir aux chaines de caractères pour éviter ce type de problèmes 
 ```
 
-Lorsque l'on charge des tables de donnÃ©es, il est possible que R ne reconnaisse pas une variable numÃ©rique et qu'elle soit codÃ©e en facteurs. Dans ce cas, il faut la convertir en chaines de caractÃ¨res avant de la convertir en nombre, car les facteurs sont associÃ©s Ã  des numÃ©ros qui correspondent aux modalitÃ©s. 
+Lorsque l'on charge des tables de données, il est possible que R ne reconnaisse pas une variable numérique et qu'elle soit codée en facteurs. Dans ce cas, il faut la convertir en chaines de caractères avant de la convertir en nombre, car les facteurs sont associés à des numéros qui correspondent aux modalités. 
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -379,61 +379,61 @@ as.numeric(as.character(facteurs))
 ```
 
 
-# GÃ©nÃ©rer des variables alÃ©atoires 
+# Générer des variables aléatoires 
 
-On a souvent besoin de gÃ©nÃ©rer des nombres alÃ©atoires, par exemple pour tirer un Ã©chantillon dans les lignes d'une table, le plus simple est d'utiliser `sample` : 
+On a souvent besoin de générer des nombres aléatoires, par exemple pour tirer un échantillon dans les lignes d'une table, le plus simple est d'utiliser `sample` : 
  
 ```{r message=FALSE, warning=FALSE}
-sample(1:100,5) # on tire 5 Ã©lÃ©ments sans remise entre 1 et 100
+sample(1:100,5) # on tire 5 éléments sans remise entre 1 et 100, l'argument replace = TRUE permet de faire un tirage avec remise.
 ```
 
 
-Il est parfois intÃ©ressant de simuler des donnÃ©es. GÃ©nÃ©rons 50 observations tirÃ©es dâ€™une variable suivant une loi normale de moyenne 20 et d'Ã©cart-type 10.
+Il est parfois intéressant de simuler des données. Générons 50 observations tirées d'une variable suivant une loi normale de moyenne 20 et d'écart-type 10.
  
 ```{r message=FALSE, warning=FALSE}
-set.seed(123) # permet de reproduire les mÃªmes rÃ©sultats d'une fois sur l'autre en dÃ©pit de l'alÃ©a prÃ©sent
+set.seed(123) # permet de reproduire les mêmes résultats d'une fois sur l'autre en dépit de l'aléa présent
 n <- 50
 Y <- rnorm(n,20,5)
 
 mean(Y) # moyenne
-sd(Y) # Ã©cart-type
-sd(Y)/sqrt(length(Y)) # Ã©cart-type de la moyenne
+sd(Y) # écart-type
+sd(Y)/sqrt(length(Y)) # écart-type de la moyenne
 
 summary(Y) # quartiles et moyenne
 ```
 
-On peut reprÃ©senter graphiquement cette variable 
+On peut représenter graphiquement cette variable 
  
 ```{r message=FALSE, warning=FALSE}
-boxplot(Y) # diagramme boÃ®te
+boxplot(Y) # diagramme boîte
 
-hist(Y, probability=T, col="blue") # histogramme de la densitÃ©
+hist(Y, probability=T, col="blue") # histogramme de la densité
 
-lines(density(Y), col="red", lwd=2) # estimation par la mÃ©thode du noyau
-# tracer la loi thÃ©orique
+lines(density(Y), col="red", lwd=2) # estimation par la méthode du noyau
+# tracer la loi théorique
 x <- 1:100
 curve(dnorm(x,mean=20,sd=5),add=TRUE,col="green",lwd=2) # l'argument add permet de rajouter ce contour sur le graphique
 ```
 
-On peut gÃ©nÃ©rer des observations tirÃ©es dans une loi uniforme sur [a,b]
+On peut générer des observations tirées dans une loi uniforme sur [a,b]
  
 ```{r message=FALSE, warning=FALSE}
 X <- runif(n,50,100)
 hist(X)
 ```
 
-Vous pouvez augmenter la valeur de `n` pour voir ce que Ã§a donne 
+Vous pouvez augmenter la valeur de `n` pour voir ce que ça donne 
 
 
 
-# Lecture et exploration de donnÃ©es 
+# Lecture et exploration de données 
 
-Pour cette entrÃ©e en matiÃ¨re de l'exploration d'un vrai fichier de donnÃ©e, nous nous sommes fortement inspirÃ©s de l'exercice suivant https://www.math.univ-toulouse.fr/~besse/Wikistat/pdf/st-scenar-statlab.pdf
+Pour cette entrée en matière de l'exploration d'un vrai fichier de donnée, nous nous sommes fortement inspirés de l'exercice suivant https://www.math.univ-toulouse.fr/~besse/Wikistat/pdf/st-scenar-statlab.pdf
 
-Une  Ã©tude rÃ©alisÃ©e  entre  1961  et  1973  dans  la  maternitÃ©  dâ€™un  hÃ´pital dâ€™Oakland  (Californie)  avait  pour  but  de  rechercher  si  certaines  caractÃ©ristiques  des  parents  avaient  une  influence  sur  le  dÃ©veloppement  de  lâ€™enfant. Parmi les variables collectÃ©es, 19 variables dÃ©crites dans le tableau ci-dessous ont  Ã©tÃ©  observÃ©es  sur  115  familles  ou  unitÃ©s  statistiques.  Ces  variables  dÃ©crivent des informations mÃ©dicales et socio-Ã©conomiques concernant le bÃ©bÃ© et ses parents au moment de la naissance puis dix ans plus tard, permettant ainsi de se poser diffÃ©rentes questions de nature plutÃ´t Ã©pidÃ©miologique :
-â€“  Influence ou non de la consommation de cigarettes sur le sexe de lâ€™enfant, sur son poids, sur sa taille,
-â€“  sur lâ€™Ã©volution du poids de la mÃ¨re en 10 ans,
-â€“  sur les liaisons entre les caractÃ©ristiques des parents (poids, taille, rhÃ©sus) et celles de leur enfant
+Une  étude réalisée  entre  1961  et  1973  dans  la  maternité  d'un  hôpital d'Oakland  (Californie)  avait  pour  but  de  rechercher  si  certaines  caractéristiques  des  parents  avaient  une  influence  sur  le  développement  de  l'enfant. Parmi les variables collectées, 19 variables décrites dans le tableau ci-dessous ont  été  observées  sur  115  familles  ou  unités  statistiques.  Ces  variables  décrivent des informations médicales et socio-économiques concernant le bébé et ses parents au moment de la naissance puis dix ans plus tard, permettant ainsi de se poser différentes questions de nature plutôt épidémiologique :
+-  Influence ou non de la consommation de cigarettes sur le sexe de l'enfant, sur son poids, sur sa taille,
+-  sur l'évolution du poids de la mère en 10 ans,
+-  sur les liaisons entre les caractéristiques des parents (poids, taille, rhésus) et celles de leur enfant
 
 ![](C:/Users/Stephanie/Desktop/R_initiation/list_var.png)
 
@@ -441,51 +441,51 @@ Une  Ã©tude rÃ©alisÃ©e  entre  1961  et  1973  dans  la  maternitÃ©  dâ€™un  hÃ´
 
 ```{r message=FALSE, warning=FALSE}
 famil=read.csv2("statlab.csv") # lecture du fichier csv
-head(famil) # aperÃ§u du haut des donnÃ©es
+head(famil) # aperçu du haut des données
 dim(famil) # combien de colonnes et de ligne 
 summary(famil) # quelques statistiques classiques
 ```
 
-La fonction `summary` fournit dÃ©jÃ  beaucoup d'information sur chaque variable. Mais on pourrait rÃ©appliquer les fonctions vues prÃ©cedemment pour calculer ces indicateurs et/ou les reprÃ©senter graphiquement (moyenne, Ã©cart-type, quantiles, diagramme boÃ®te, histogramme). Cela permet notamment de repÃ©rer les valeurs atypiques, l'hÃ©tÃ©rogÃ©nÃ©itÃ© des variances, les distributions dissymÃ©triques... 
+La fonction `summary` fournit déjà beaucoup d'information sur chaque variable. Mais on pourrait réappliquer les fonctions vues précedemment pour calculer ces indicateurs et/ou les représenter graphiquement (moyenne, écart-type, quantiles, diagramme boîte, histogramme). Cela permet notamment de repérer les valeurs atypiques, l'hétérogénéité des variances, les distributions dissymétriques... 
 
 
 ```{r message=FALSE, warning=FALSE}
 sapply(famil, mean) # les moyennes de chaque variable 
-sapply(famil, sd) # les Ã©carts type
+sapply(famil, sd) # les écarts type
 boxplot(famil$ET0) # taille de l'enfant
 boxplot(famil$EP0) # poids de l'enfant
 hist(famil$ET0)
 hist(famil$EP0)
 ```
 
-Pour les variables qualitatives, on aura plutÃ´t tendance Ã  considÃ©rer les frÃ©quences des modalitÃ©s.
+Pour les variables qualitatives, on aura plutôt tendance à considérer les fréquences des modalités.
 
 ```{r message=FALSE, warning=FALSE}
 table(famil$ESx)
 barplot(table(famil$ESx)) # sexe de l'enfant
 barplot(table(famil$MCig0)) # consommation de cigarettes
-pie(table(famil$MCig10)) # consommation de cigarettes dix ans aprÃ¨s 
+pie(table(famil$MCig10)) # consommation de cigarettes dix ans après 
 ```
 
-Pour analyser grossiÃ¨rement les liaisons, on peut regarder un nuage de points 
+Pour analyser grossièrement les liaisons, on peut regarder un nuage de points 
 
 ```{r message=FALSE, warning=FALSE}
 pairs(famil[,c(3:6,8,9,11,12,14,16:19)])
-plot(EP10~PP10,data=famil) # poids de l'enfant Ã  10 ans, poids du pÃ¨re
-plot(EP10~ET10,data=famil) # poids de l'enfant Ã  10 ans, taille Ã  10 ans
+plot(EP10~PP10,data=famil) # poids de l'enfant à 10 ans, poids du père
+plot(EP10~ET10,data=famil) # poids de l'enfant à 10 ans, taille à 10 ans
 ```
 
-Pour analyser grossiÃ¨rement les liaisons entre variables qualitatives, on aura recours aux tables de contingence 
+Pour analyser grossièrement les liaisons entre variables qualitatives, on aura recours aux tables de contingence 
 
 ```{r message=FALSE, warning=FALSE}
-table(famil$ESx,famil$ERh) # sexe et rhÃ©sus
+table(famil$ESx,famil$ERh) # sexe et rhésus
 
 addmargins(table(famil$ESx,famil$ERh)) # avec les marges
 
-prop.table(table(famil$ESx,famil$ERh)) # frÃ©quences relatives
+prop.table(table(famil$ESx,famil$ERh)) # fréquences relatives
 ```
 
-Une maniÃ¨re de reprÃ©senter graphiquement ces tables est d'utiliser une moisaique
+Une manière de représenter graphiquement ces tables est d'utiliser une moisaique
 
 ```{r message=FALSE, warning=FALSE}
 mosaicplot(table(famil$ESx,famil$ERh))
@@ -502,106 +502,106 @@ boxplot(EP0~MCig0,data=famil) # poids de l'enfant vs consommation de cigarettes
 
 ### Tests de liaison
 
-Quelques tests, imaginons qu'on veuille tester l'indÃ©pendance de deux variables qualitatives. Le test du $\Khi^2$ sera adaptÃ© Ã  ce problÃ¨me (dans le cas 
-oÃ¹ les effectifs d'une modalitÃ© sont trop faibles, il faut regrouper les modalitÃ©s). 
+Quelques tests, imaginons qu'on veuille tester l'indépendance de deux variables qualitatives. Le test du $\Khi^2$ sera adapté à ce problème (dans le cas 
+où les effectifs d'une modalité sont trop faibles, il faut regrouper les modalités). 
 
 ```{r message=FALSE, warning=FALSE}
-chisq.test(table(famil$ESx,famil$ERh)) # Sexe de l'enfant vs RhÃ©sus
+chisq.test(table(famil$ESx,famil$ERh)) # Sexe de l'enfant vs Rhésus
 chisq.test(table(famil$ESx,famil$MCig0)) # Sexe de l'enfant vs consommation de cigarettes
 ```
 
-On sâ€™intÃ©resse Ã  lâ€™influence du sexe sur la taille Ã  la naissance. Tester lâ€™Ã©galitÃ© des deux moyennes nÃ©cessite de vÃ©rifier prÃ©alablement plusieurs points : la normalitÃ© des distributions dans chaque classe Ã  moins que lâ€™Ã©chantillon soit considÃ©rÃ© de taille suffisamment grande, le caractÃ¨re indÃ©pendant ou appariÃ©s des Ã©chantillons, lâ€™Ã©galitÃ© ou non des variances Ã  lâ€™intÃ©rieur de chaque groupe. On dispose de deux Ã©chantillons indÃ©pendants : les garÃ§ons et les filles. Testons les autres hypothÃ¨ses.
+On s'intéresse à l'influence du sexe sur la taille à la naissance. Tester l'égalité des deux moyennes nécessite de vérifier préalablement plusieurs points : la normalité des distributions dans chaque classe à moins que l'échantillon soit considéré de taille suffisamment grande, le caractère indépendant ou appariés des échantillons, l'égalité ou non des variances à l'intérieur de chaque groupe. On dispose de deux échantillons indépendants : les garçons et les filles. Testons les autres hypothèses.
 
 
 ```{r message=FALSE, warning=FALSE}
-# NormalitÃ© des distributions (facultatif car n grand ici)
+# Normalité des distributions (facultatif car n grand ici)
 shapiro.test(famil[famil$ESx=="M","ET0"]) 
 shapiro.test(famil[famil$ESx=="F","ET0"])
-# Ã©galitÃ© des variances (test de Fisher)
+# égalité des variances (test de Fisher)
 var.test(ET0~ESx,data=famil)
 ```
 
-Le test de comparaison des moyennes Ã  utiliser (Student vs. Welsh) dÃ©pend du rÃ©sultat prÃ©cÃ©dent concernant lâ€™Ã©galitÃ© des variances.
+Le test de comparaison des moyennes à utiliser (Student vs. Welsh) dépend du résultat précédent concernant l'égalité des variances.
 
 ```{r message=FALSE, warning=FALSE}
-t.test(ET0~ESx,var.equal=F, data=famil) # si les variances sont diffÃ©rentes c'est un test de Welsh
+t.test(ET0~ESx,var.equal=F, data=famil) # si les variances sont différentes c'est un test de Welsh
 
-t.test(ET0~ESx,var.equal=T, data=famil) # Dans le cas oÃ¹ elles sont considÃ©rÃ©es Ã©gales, câ€™est un test de Student.
+t.test(ET0~ESx,var.equal=T, data=famil) # Dans le cas où elles sont considérées égales, c'est un test de Student.
 ```
 
-Dans le cas d'Ã©chantillons appariÃ©s, par exemple si on se propose dâ€™Ã©tudier lâ€™Ã©volution du poids de la mÃ¨re au moment de la naissance et dix ans aprÃ¨s, on utilise l'option `paired=TRUE`
+Dans le cas d'échantillons appariés, par exemple si on se propose d'étudier l'évolution du poids de la mère au moment de la naissance et dix ans après, on utilise l'option `paired=TRUE`
 
 ```{r message=FALSE, warning=FALSE}
 t.test(famil$MP0, famil$MP10,paired=TRUE)
 ```
 
 Remarques : 
-- si lâ€™hypothÃ¨se de normalitÃ© des distributions nâ€™est pas vÃ©rifiÃ©e et si lâ€™Ã©chantillon est trop rÃ©duit, câ€™est un test non-paramÃ©trique quâ€™il faut mettre en Å“uvre. Les tests non-paramÃ©triques sont basÃ©s sur les rangs des observations et donc sur les comparaisons des mÃ©dianes des Ã©chantillons (wilcoxson). 
+- si l'hypothèse de normalité des distributions n'est pas vérifiée et si l'échantillon est trop réduit, c'est un test non-paramétrique qu'il faut mettre en ouvre. Les tests non-paramétriques sont basés sur les rangs des observations et donc sur les comparaisons des médianes des échantillons (wilcoxson). 
 
-- Si l'on veut tester l'indÃ©pendance entre une variable qualitative et quantitative, lâ€™ANOVA associÃ©e Ã  un test de Fisher est sans doute le test le plus utilisÃ© ; il revient au test de Student lorsque la variable qualitative nâ€™a que deux modalitÃ©s.
+- Si l'on veut tester l'indépendance entre une variable qualitative et quantitative, l'ANOVA associée à un test de Fisher est sans doute le test le plus utilisé ; il revient au test de Student lorsque la variable qualitative n'a que deux modalités.
 
 
-### RÃ©gression simple et multiple
+### Régression simple et multiple
 
-La rÃ©gression simple permet de tester lâ€™influence Ã©ventuelle dâ€™une variable sur une autre et plus prÃ©cisÃ©ment, dans le cas de cet exemple, dâ€™expliquer la taille  de  lâ€™enfant  Ã   10  ans. On estime le modÃ¨le avec la fonction `lm`  
+La régression simple permet de tester l'influence éventuelle d'une variable sur une autre et plus précisément, dans le cas de cet exemple, d'expliquer la taille  de  l'enfant  à  10  ans. On estime le modèle avec la fonction `lm`  
 
 
 ```{r message=FALSE, warning=FALSE}
 res1.reg=lm(ET10 ~ PT, data = famil)
-names(res1.reg) # liste des rÃ©sultats
+names(res1.reg) # liste des résultats
 ```
 
-Les graphiques suivants permettent de sâ€™assurer de la validitÃ© du modÃ¨le, et notamment de statuer sur lâ€™homoscÃ©dasticitÃ© des rÃ©sidus, leur normalitÃ©, la bonne linÃ©aritÃ© du modÃ¨le.
+Les graphiques suivants permettent de s'assurer de la validité du modèle, et notamment de statuer sur l'homoscédasticité des résidus, leur normalité, la bonne linéarité du modèle.
 
 ```{r message=FALSE, warning=FALSE}
-qqnorm(res1.reg$residuals) # normalitÃ© des rÃ©sidus
+qqnorm(res1.reg$residuals) # normalité des résidus
 qqline(res1.reg$residuals)
 shapiro.test(res1.reg$residuals) 
 ```
 
 
-Les rÃ©sidus sont â€œgrandsâ€ si, une fois normalisÃ©s ou plutÃ´t â€œstudentisÃ©sâ€, ils sont de valeur absolue plus grande que 2. 
+Les résidus sont "grands" si, une fois normalisés ou plutôt "studentisés", ils sont de valeur absolue plus grande que 2. 
 
 ```{r message=FALSE, warning=FALSE}
 res.student=rstudent(res1.reg)
 ychap=res1.reg$fitted.values
-plot(res.student~ychap,ylab="RÃ©sidus") 
+plot(res.student~ychap,ylab="Résidus") 
 abline(h=c(-2,0,2),lty=c(2,1,2)) # rajoute une ligne horizontale
 ```
 
-Une observation est influente si elle a un grand rÃ©sidu est est associÃ©e Ã  une grande valeur sur la diagonale de la hat matrix. Cela correspond Ã  une valeur Ã©levÃ©e (plus grande que 1) de la distance de Cook.
+Une observation est influente si elle a un grand résidu est est associée à une grande valeur sur la diagonale de la hat matrix. Cela correspond à une valeur élevée (plus grande que 1) de la distance de Cook.
 
 ```{r message=FALSE, warning=FALSE}
-cook=cooks.distance(res1.reg) # repÃ©rage de points influents
+cook=cooks.distance(res1.reg) # repérage de points influents
 plot(cook~ychap,ylab="Distance de Cook")
 abline(h=c(0,1),lty=c(1,2))
 ```
 
-La significativitÃ© du modÃ¨le peut Ãªtre analysÃ©e via la fonction `summary` : 
+La significativité du modèle peut être analysée via la fonction `summary` : 
 
 ```{r message=FALSE, warning=FALSE}
 summary(res1.reg)
 ```
 
-La rÃ©gression linÃ©aire simple conduit Ã  un modÃ¨le trÃ¨s mal ajustÃ©. Le modÃ¨le linÃ©aire multiple ci-dessous, plus complexe, recherche un meilleur ajustement des donnÃ©es.
+La régression linéaire simple conduit à un modèle très mal ajusté. Le modèle linéaire multiple ci-dessous, plus complexe, recherche un meilleur ajustement des données.
 
 ```{r message=FALSE, warning=FALSE}
 res2.reg=lm(ET10~ET0+EP0+MA0+MP0+MT+MP10+PA0+PT+PP10+RF0+RF10, data = famil)
-plot(res2.reg) # diagnostics des rÃ©sidus
-summary(res2.reg) # rÃ©sultats 
+plot(res2.reg) # diagnostics des résidus
+summary(res2.reg) # résultats 
 ```
 
 
 ### ACP
 
-On peut aller plus loin dans l'exploration sur les donnÃ©es sans fixer une variable cible, en rÃ©alisant une analyse en composantes principales. On ne garde que les variables quantitatives.  
+On peut aller plus loin dans l'exploration sur les données sans fixer une variable cible, en réalisant une analyse en composantes principales. On ne garde que les variables quantitatives.  
 
-Pour cela, on va faire appel Ã  la librairie `prcomp`, ce n'est pas la seule qui permet de faire une ACP. Assez rÃ©guliÃ¨rement sous R, on va avoir besoin de mobiliser des packages ou librairies. La  liste  complÃ¨te  des packages disponibles gratuitement est consultable sur le site du CRAN. Lâ€™installation dâ€™un package supplÃ©mentaire peut se faire via le menu Packages>Installer le(s) package(s) et en choisissant un site miroir du CRAN. On peut Ã©galement tÃ©lÃ©charger lâ€™archive .zip correspondant au package et utiliser ensuite Packages/Installer depuis des fichiers zip
+Pour cela, on va faire appel à la librairie `prcomp`, ce n'est pas la seule qui permet de faire une ACP. Assez régulièrement sous R, on va avoir besoin de mobiliser des packages ou librairies. La  liste  complète  des packages disponibles gratuitement est consultable sur le site du CRAN. L'installation d'un package supplémentaire peut se faire via le menu Packages>Installer le(s) package(s) et en choisissant un site miroir du CRAN. On peut également télécharger l'archive .zip correspondant au package et utiliser ensuite Packages/Installer depuis des fichiers zip
 
 On peut sinon taper la commande :
 
 ```{r message=FALSE, warning=FALSE}
-#install.packages('prcomp') # dÃ©commenter pour installer
+#install.packages('prcomp') # décommenter pour installer
 ```
 
 
@@ -612,9 +612,9 @@ noms=dimnames(data)[[2]];noms
 names(data)
 
 res.pca=prcomp(data,scale=T)
-plot(res.pca) # dÃ©croissance des valeurs propres
+plot(res.pca) # décroissance des valeurs propres
 
-summary(res.pca) # parts de variance expliquÃ©e
+summary(res.pca) # parts de variance expliquée
 
 biplot(res.pca) # biplot du premier plan principal
 plot(res.pca$x,col=as.integer(famil$MCig0))
@@ -623,47 +623,56 @@ abline(h=0,v=0,lty=2)
 ```
 
 
-# Exploration avancÃ©e sur donnÃ©es des urgences 
+# Exploration avancée sur données des urgences 
 
-Cet exercice mobilise l'enquÃªte nationale sur les structures des urgences hospitaliÃ¨res 2013. Un jour donnÃ©, le 11 juin 2013 de 8h Ã  8h le 
-lendemain, un questionnaire papiÃ© renseignÃ© en temps rÃ©el en parallÃ¨le de la prise en charge par tous les points dâ€™accueils (736) des Ã©tablissements de santÃ© autorisÃ©s pour lâ€™activitÃ© dâ€™accueil et de traitement des urgences (634) et pour tous les patients (52018). 
+Cet exercice mobilise l'enquête nationale sur les structures des urgences hospitalières 2013. Un jour donné, le 11 juin 2013 de 8h à 8h le 
+lendemain, un questionnaire papié renseigné en temps réel en parallèle de la prise en charge par tous les points d'accueils (736) des établissements de santé autorisés pour l'activité d'accueil et de traitement des urgences (634) et pour tous les patients (52018). 
 
 
 ```{r message=FALSE, warning=FALSE}
 urgences <- read.csv2("enq_urgences_structure.csv", sep=',') # lecture du fichier csv
-head(urgences) # aperÃ§u du haut des donnÃ©es
+head(urgences) # aperçu du haut des données
 dim(urgences) # combien de colonnes et de ligne 
-#â™ names(urgences)
+#names(urgences)
 dim(urgences)
 ```
 
-Pour chaque heure de pointage (8h, 12h, 18h, 22h, 8h) indiquÃ©e par les lettres A, B, C, D, E, on retient pour l'exercice les variables suivantes (cf questionnaire dans le dossier) :
+Remarque, si le fichier était au format xls, on pourrait l'ouvrir, par exemple, avec le package `xlsx`
 
-Les variables de prÃ©sence de patients aux urgences :
+```{r message=FALSE, warning=FALSE}
+library("xlsx")
+urgences2 <- read.xlsx("enq_urgences_structure.xls",1) # 1 correspond ici à l'index de la page 1 de l'excel
+head(urgences2) # aperçu du haut des données
+dim(urgences2)
+```
 
-- 87 : Nombre de patients en cours dâ€™Ã©valuation, non admis (nombre de patients prÃ©sents hors lit i.e. box, salle dâ€™attente) pour lesquels une dÃ©cision dâ€™hospitalisation nâ€™a pas Ã©tÃ© prise
-- 88 : Nombre de patients admis et en attente dâ€™hospitalisation sur un brancard ou un fauteuil roulant (Â« boarding Â»)
-- 89 : Nombre de patients prÃ©sents en lit (UHCD) qui ne sont pas en attente dâ€™hospitalisation
-- 90 : Nombre de patients prÃ©sents en lit (UHCD) en attente dâ€™hospitalisation
+Pour chaque heure de pointage (8h, 12h, 18h, 22h, 8h) indiquée par les lettres A, B, C, D, E, on retient pour l'exercice les variables suivantes (cf questionnaire dans le dossier) :
+
+Les variables de présence de patients aux urgences :
+
+- 87 : Nombre de patients en cours d'évaluation, non admis (nombre de patients présents hors lit i.e. box, salle d'attente) pour lesquels une décision d'hospitalisation n'a pas été prise
+- 88 : Nombre de patients admis et en attente d'hospitalisation sur un brancard ou un fauteuil roulant (« boarding »)
+- 89 : Nombre de patients présents en lit (UHCD) qui ne sont pas en attente d'hospitalisation
+- 90 : Nombre de patients présents en lit (UHCD) en attente d'hospitalisation
 
 Les variables d'organisation du travail : 
 
-- 92 : Nombre de mÃ©decins urgentistes
-- 93 : Nombre de mÃ©decins non urgentistes
+- 92 : Nombre de médecins urgentistes
+- 93 : Nombre de médecins non urgentistes
 - 94 : Nombre d'interne
-- 95 : Nombre de mÃ©decins intÃ©rimaires et extÃ©rieurs
-- 96 : Nombre de cadres de santÃ©
-- 97 : Nombre dâ€™infirmiers diplÃ´mÃ©s dâ€™Ã‰tat (IDE)
-- 98 : Nombre dâ€™aide soignants(AS)
-- 99 : Nombre dâ€™agents de service hospitalier (ASH)
-- 100 : Nombre de secrÃ©taires 
+- 95 : Nombre de médecins intérimaires et extérieurs
+- 96 : Nombre de cadres de santé
+- 97 : Nombre d'infirmiers diplômés d'État (IDE)
+- 98 : Nombre d'aide soignants(AS)
+- 99 : Nombre d'agents de service hospitalier (ASH)
+- 100 : Nombre de secrétaires 
 - 101 : Nombre de brancardiers
 
-Les variables liÃ©es Ã  l'Ã©tablissement :
+Les variables liées à l'établissement :
 
 A103 : Nombre de passages sur les 24 heures
 A4 : type d'accueil
-A2 : numÃ©ro finess de l'Ã©tablissement
+A2 : numéro finess de l'établissement
 
 ```{r message=FALSE, warning=FALSE}
 col_a_garder <- c(87:90,92:101)
@@ -675,25 +684,25 @@ urgences <- urgences[,col_a_garder]
 dim(urgences)
 ```
 
-Regardons d'abord la rÃ©partition des types d'Ã©tablissement
+Regardons d'abord la répartition des types d'établissement
 
 ```{r message=FALSE, warning=FALSE}
-table(urgences$ID_A4) # rÃ©partition des structures
+table(urgences$ID_A4) # répartition des structures
 ```
 
 
-On va regarder la distribution du nombre de passages total dans l'Ã©tablissement, c'est un proxy de la taille de ce dernier. On va crÃ©er des modalitÃ©s pour comparer des services d'urgences comparables. Pour les graphiques, on va dÃ©sormais utiliser la librairie `ggplot2`, installez-lÃ  si elle n'est pas installÃ©e.
+On va regarder la distribution du nombre de passages total dans l'établissement, c'est un proxy de la taille de ce dernier. On va créer des modalités pour comparer des services d'urgences comparables. Pour les graphiques, on va désormais utiliser la librairie `ggplot2`, installez-là si elle n'est pas installée.
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
-ggplot(urgences, aes(x=ID_A103)) + geom_histogram(fill="blue", alpha=0.4) + ggtitle("distribution du nombre de passages") # alpha gÃ¨re la transparence 
+ggplot(urgences, aes(x=ID_A103)) + geom_histogram(fill="blue", alpha=0.4) + ggtitle("distribution du nombre de passages") # alpha gère la transparence 
 ```
 
 Comparons cette distribution par type de structure :
 
 
 ```{r message=FALSE, warning=FALSE}
-p <- ggplot(urgences, aes(x=ID_A103, fill = ID_A4)) + geom_histogram(alpha=0.4) + theme(legend.position="top") # en prÃ©cisant la couleur par un nom de variables, on demande le tracÃ© d'un histogramme pour chaque modalitÃ© 
+p <- ggplot(urgences, aes(x=ID_A103, fill = ID_A4)) + geom_histogram(alpha=0.4) + theme(legend.position="top") # en précisant la couleur par un nom de variables, on demande le tracé d'un histogramme pour chaque modalité 
 p
 ```
 
@@ -704,7 +713,7 @@ library(plotly)
 ggplotly(p)
 ```
 
-On va dÃ©sormais transformer cette variable en variable qualitative pour rassembler les Ã©tablissements par proxy de taille 
+On va désormais transformer cette variable en variable qualitative pour rassembler les établissements par proxy de taille 
 
 ```{r message=FALSE, warning=FALSE}
 valeurs_manquantes <- is.na(urgences$ID_A103) # on regarde si la variable admet des valeurs manquantes, 
@@ -715,13 +724,13 @@ dim(urgences)
 urgences <- na.omit(urgences) # si on veut retirer toutes les lignes avec au moins une valeur manquante (pas toujours souhaitable)
 dim(urgences)
 
-# on crÃ©e une nouvelle colonne
-urgences$nb_passages_3 <- cut(urgences$ID_A103, breaks = c(0,40,80,max(urgences$ID_A103, na.rm=T))) # max, comme la plupart des fonctions renverra une erreur si appliquÃ© sur un vecteur contenant des NA, on les enlÃ¨ve pour le calcul avec l'option na.rm 
+# on crée une nouvelle colonne
+urgences$nb_passages_3 <- cut(urgences$ID_A103, breaks = c(0,40,80,max(urgences$ID_A103, na.rm=T))) # max, comme la plupart des fonctions renverra une erreur si appliqué sur un vecteur contenant des NA, on les enlève pour le calcul avec l'option na.rm 
 table(urgences$nb_passages)
 ```
 
 
-On voudrait maintenant regarder le nombre de patients ou les effectifs par tranche horaire, on voit bien qu'il sera plus facile d'avoir une variable tranche horaire. Il suffit de rÃ©cupÃ©rer les colonnes correspondant Ã  chaque horaire, de les renommer, puis de les empiler en crÃ©ant une colonne horaire 
+On voudrait maintenant regarder le nombre de patients ou les effectifs par tranche horaire, on voit bien qu'il sera plus facile d'avoir une variable tranche horaire. Il suffit de récupérer les colonnes correspondant à chaque horaire, de les renommer, puis de les empiler en créant une colonne horaire 
 
 ```{r message=FALSE, warning=FALSE}
 horaire_8 <- urgences[,c(paste('ID_','A',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
@@ -738,7 +747,7 @@ horaire_18$heure <- '18h'
 horaire_22$heure <- '22h'
 horaire_8_$heure <- '8h_'
 
-#pour pouvoir empiler les 5 tables il faut qu'elles aient les mÃªmes noms de colonnes 
+#pour pouvoir empiler les 5 tables il faut qu'elles aient les mêmes noms de colonnes 
 names(horaire_8) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
 names(horaire_12) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
 names(horaire_18) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
@@ -755,19 +764,19 @@ names(urgences2)[names(urgences2)=='ID_A4'] <- 'type_structure'
 names(urgences2)[names(urgences2)=='ID_A2'] <- 'index_structure'
 ```
 
-On peut regarder le nombre de mÃ©decin urgentiste `ID_92` en fonction de la tranche horaire et de la taille de la structure avec un graphique Ã  boites.
+On peut regarder le nombre de médecin urgentiste `ID_92` en fonction de la tranche horaire et de la taille de la structure avec un graphique à boites.
 
 
 ```{r message=FALSE, warning=FALSE}
-sapply(urgences2, class) #attention certaines variables numÃ©riques ne sont pas considÃ©rÃ©es comme telles !
+sapply(urgences2, class) #attention certaines variables numériques ne sont pas considérées comme telles !
 urgences2[,1:15] <- lapply(urgences2[,1:15],function(v) as.numeric(as.character(v)))
 
-p<-ggplot(data = urgences2, aes(x=heure, y=ID_92, color=nb_passages_3)) + geom_boxplot() + ylab('Effectif de mÃ©decin urgentiste')
+p<-ggplot(data = urgences2, aes(x=heure, y=ID_92, color=nb_passages_3)) + geom_boxplot() + ylab('Effectif de médecin urgentiste')
 p
 ```
 
 
-Si on veut plutÃ´t regarder l'Ã©volution du nombre moyen dans le cours de la journÃ©e, il va falloir d'abord calculer cette moyenne par groupe. Pour cela on va faire appel au package `dplyr`, vous devez l'installer si ce n'est pas dÃ©jÃ  fait.
+Si on veut plutôt regarder l'évolution du nombre moyen dans le cours de la journée, il va falloir d'abord calculer cette moyenne par groupe. Pour cela on va faire appel au package `dplyr`, vous devez l'installer si ce n'est pas déjà fait.
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
@@ -776,18 +785,20 @@ grouped <- group_by(urgences2, heure, nb_passages_3)
 grouped_mean <- summarise(grouped, mean=mean(ID_92, na.rm = T))
 head(grouped_mean)
 
-# les deux actions peuvent Ãªtre rÃ©alisÃ©es dans la foulÃ©e avec l'opÃ©rateur %>%
+# les deux actions peuvent être réalisées dans la foulée avec l'opérateur %>%
 grouped_mean <- urgences2 %>% group_by(heure, nb_passages_3) %>% summarise(mean=mean(ID_92, na.rm = TRUE))
 head(grouped_mean)
                                                                                         
 ggplot(data = grouped_mean, aes(x=heure, y=mean, group = nb_passages_3, color = nb_passages_3)) + geom_line() + geom_point()
 ```
 
-Maintenant on va regarder l'Ã©volution de la distribution des effectifs de personnels et de patients dans le temps. Pour prÃ©senter les diffÃ©rents graphiques cÃ´te Ã  cÃ´te, on va utiliser l'option `facet` de `ggplot2` mais avant cela, il faut retravailler encore sur la forme des donnÃ©es. CommenÃ§ons par regarder les distributions d'effectifs de professionnels, donc les variables de 
+Remarque : les fonctionnalités du packages `dplyr` sont bien plus riches, allez jeter un oeil à la cheatsheet data wrangling french fournie dans le dossier de la formation.
+
+Maintenant on va regarder l'évolution de la distribution des effectifs de personnels et de patients dans le temps. Pour présenter les différents graphiques côte à côte, on va utiliser l'option `facet` de `ggplot2` mais avant cela, il faut retravailler encore sur la forme des données. Commençons par regarder les distributions d'effectifs de professionnels, donc les variables de 
 
 ```{r message=FALSE, warning=FALSE}
 urgences_ps <- urgences2[,c('index_structure','nb_passages_3','heure','ID_90','ID_92','ID_93','ID_94','ID_95','ID_96','ID_97','ID_98','ID_99','ID_100','ID_101')]
-names(urgences_ps)[4:length(urgences_ps)] <-c('med urgentistes', 'med non urgentistes','internes','mÃ©decins int et ext', 'cadres','IDE','AS','ASH','secrÃ©taires','brancardiers') 
+names(urgences_ps)[4:length(urgences_ps)] <-c('med urgentistes', 'med non urgentistes','internes','médecins int et ext', 'cadres','IDE','AS','ASH','secrétaires','brancardiers') 
 library(reshape)
 urgences_ps <- melt(urgences_ps, id=c("index_structure","nb_passages_3",'heure'))
 head(urgences_ps)
@@ -795,20 +806,20 @@ names(urgences_ps)[4:5] <-c('PS','effectif')
 head(urgences_ps)
 ```
 
-On a donc crÃ©Ã© une variable PS qui prend plusieurs modalitÃ©s et on a pour chaque structure d'urgence identifiÃ©e par l'identifiant ID_A2, une ligne par profession avec les effectifs corresponds. Cette reprÃ©sentation rend la reprÃ©sentation graphique quasi immÃ©diate avec `ggplot2`
+On a donc créé une variable PS qui prend plusieurs modalités et on a pour chaque structure d'urgence identifiée par l'identifiant ID_A2, une ligne par profession avec les effectifs corresponds. Cette représentation rend la représentation graphique quasi immédiate avec `ggplot2`
 
 ```{r message=FALSE, warning=FALSE}
 urgences_ps$heure = factor(urgences_ps$heure , levels=c("8h", "12h", "18h", "22h", "8h_")) # on transforme la variable en facteur et on ordonne les heures
 p <- ggplot(urgences_ps, aes(x=PS, y=effectif, fill=PS)) + geom_bar(stat = "identity") + facet_grid(as.factor(heure) ~ nb_passages_3) + theme(        axis.ticks.x=element_blank(),axis.text.x=element_blank())
 p
-# theme permet de retirer la lÃ©gende sous l'axe des x, si vous retirez ce bout de code vous verrez la diffÃ©rence
+# theme permet de retirer la légende sous l'axe des x, si vous retirez ce bout de code vous verrez la différence
 # facet_grid permet de produire plusieurs graphique en fixant une variable ici le nombre de passage ou l'heure de pointage
 ```
 
 
-Le mÃªme exercice peut Ãªtre rÃ©alisÃ© pour la distribution des types de patients.
+Le même exercice peut être réalisé pour la distribution des types de patients.
 
 
-Enfin, nous allons reprÃ©senter la densitÃ© du nombre de patients au cours de la journÃ©e sur une carte (ID_A103). Pour cela, on va lire une table SAS et la fusionner avec notre table puis avoir recours au package XX.  
+Enfin, nous allons représenter la densité du nombre de patients au cours de la journée sur une carte (ID_A103). Pour cela, on va lire une table SAS et la fusionner avec notre table puis avoir recours au package XX.  
 
 
