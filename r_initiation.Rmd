@@ -817,9 +817,60 @@ p
 ```
 
 
-Le même exercice peut être réalisé pour la distribution des types de patients.
+**Le même exercice peut être réalisé pour la distribution des types de patients.**
 
 
-Enfin, nous allons représenter la densité du nombre de patients au cours de la journée sur une carte (ID_A103). Pour cela, on va lire une table SAS et la fusionner avec notre table puis avoir recours au package XX.  
+Enfin, nous allons représenter la répartition des structures d'urgence en France. Pour cela nous allons utiliser la table sas `ej.sas7bdat` qui lie les codes FINESS des établissements avec leurs coordonnées géographiques. Cette base est stockée dans un format SAS, on va utiliser la librairie `haven` pour la lire.   
+
+```{r message=FALSE, warning=FALSE}
+library(haven)
+ej <- read_sas(data_file = 'ej.sas7bdat')
+head(ej)
+```
+
+Pour tracer sur une carte les structures d'urgence de notre table `urgences`, on va apparier notre table avec `ej`, sur la clé `finess` et `ID_A2` respectivement. On va bien faire attention à garder tous les codes finess de la base `urgences`
+
+```{r message=FALSE, warning=FALSE}
+urgences_loc <- merge(urgences[,c('ID_A2','ID_A4','ID_A103')],ej,by.x = 'ID_A2',by.y = 'finess', all.x = TRUE) #on garde aussi le type de structure et le nombre de passages
+head(urgences_loc)
+dim(urgences)
+dim(urgences_loc)
+dim(ej)
+```
+
+Le fait d'avoir indiqué l'option `all.x = TRUE` force à garder toutes les lignes de `urgences` même quand il n'existe pas de match possible. Ici certains codes finess ne semblent pas avoir de coordonnées géographiques disponibles. On ne va conserver que les structures qui ont des coordonnées 
+
+```{r message=FALSE, warning=FALSE}
+urgences_loc_sans_na <- na.omit(urgences_loc)
+dim(urgences_loc_sans_na)
+```
+Seulement la motié des structures sont géocodées.
+
+On va regarder la répartition des structures d'urgence par type de structure (repéré par la variable `ID_A4`).
+La représentation de points sur une carte nécessite de maîtriser le concept de projection : https://medium.com/@_FrancoisM/introduction-%C3%A0-la-manipulation-de-donn%C3%A9es-cartographiques-23b4e38d8f0f. 
 
 
+```{r message=FALSE, warning=FALSE}
+library(leaflet)
+library(rgdal)
+urgences_loc_sans_na <- na.omit(urgences_loc)
+
+# Ce bloc permet de convertir les coordonnées en Lambert 93 en WGS 84 plus traditionnel
+coordinates(urgences_loc_sans_na) <- c("X", "Y")
+proj4string(urgences_loc_sans_na) <- CRS("+init=epsg:2154") # WGS 84
+CRS.new <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+urgences_loc_sans_na <- spTransform(urgences_loc_sans_na, CRS.new)
+urgences_loc_sans_na$lon <- data.frame(coordinates(urgences_loc_sans_na))$X
+urgences_loc_sans_na$lat <- data.frame(coordinates(urgences_loc_sans_na))$Y
+
+
+factpal <- colorFactor(topo.colors(3), urgences_loc_sans_na$ID_A4) # palette de 3 couleurs
+
+m <- leaflet(urgences_loc_sans_na) %>% addTiles() %>%
+                  addCircles(lng = ~lon, lat = ~lat, weight = 1,
+                             radius = ~ID_A103*100, 
+                             popup = ~paste(rs, ", nb de passages : ", ID_A103, ", type de structure :", ID_A4),
+                             color = ~factpal(ID_A4), fillOpacity = 0.5) %>%
+                  addLegend("bottomleft", title = "Type de structure d'urgences", pal = factpal, values = ~ID_A4, opacity = 0.7)
+m
+```
