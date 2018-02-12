@@ -3,16 +3,17 @@ title: "Formation R initiation"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 
 **Qu'est ce que R ?**
 
-R (https://www.r-project.org/) est un langage de programmation dédié à l'analyse statistique. Libre et gratuit, disponible sur toutes les plateformes (Mac OS, Windows, Linux), il s'est largement imposé ces dernières années dans le domaine des sciences humaines. R dispose par défaut d'instructions de base permettant de réaliser les opérations les plus courantes. De nouvelles fonctionnalités, regroupées en packages, peuvent être facilement ajoutées pour venir enrichir les possibilités du langage. Le point fort de R par rapport à des logiciels à interfaces graphiques, est qu'il permet très facilement l'automatisation et la reproductibilité des traitements.
+R (https://www.r-project.org/) est un langage de programmation dédié à l'analyse statistique. Libre et gratuit, disponible sur toutes les plateformes (Mac OS, Windows, Linux), il s'est largement imposé ces dernières années dans le domaine des sciences humaines et de la datascience. R dispose par défaut d'instructions de base permettant de réaliser les opérations les plus courantes. De nouvelles fonctionnalités, regroupées en packages, peuvent être facilement ajoutées pour venir enrichir les possibilités du langage. Le point fort de R par rapport à des logiciels à interfaces graphiques, est qu'il permet très facilement l'automatisation et la reproductibilité des traitements.
 
 **Environnement de travail**
 
-Rstudio (https://www.rstudio.com/) est un environnement de travail permettant d'écrire du code R. Il ne s'agit pas d'un environnement clic bouton mais d'une véritable interface de développement (IDE) destiné à écrire du code. Il s'agit en fait d'une couche logiciel permettant d'écrire, d'exécuter et de visualiser les résultats d'un programme écrit dans le langage R. RStudio n'est pas indispensable pour utiliser R. Néanmoins,  il est très pratique et très bien fait.  [En savoir plus].
+Rstudio (https://www.rstudio.com/) est un environnement de travail permettant d'écrire du code R. Il ne s'agit pas d'un environnement clic bouton mais d'une véritable interface de développement (IDE) destiné à écrire du code. Il s'agit en fait d'une couche logiciel permettant d'écrire, d'exécuter et de visualiser les résultats d'un programme écrit dans le langage R. RStudio n'est pas indispensable pour utiliser R. Néanmoins,  il est très pratique et très bien fait.
 
 Le menu Session > Set Working Directory permet de sélectionner le répertoire par défaut contenant vos scripts et éventuels fichiers de données.
 Vous pouvez également le modifier via une ligne de code :
@@ -23,11 +24,15 @@ setwd('C:/Users/Stephanie/Desktop/R_initiation')
 
 Dans Rstudio pour compiler une ligne, vous pouvez placer le curseur dessus et cliquer sur Run, ou bien utiliser le raccourci clavier ctrl+entrée
 
+
+
+
+
 # Opérations de base
 
 Sous R, les éléments de base sont des objets : vecteurs, matrices, listes, table ...
-Ces objets peuvent contenir des éléments de type numérique, booléen (logical : TRUE, FALSE), chaîne de caractère (string), facteur (factor, pour les variables qualitatives prenant un nombre déterminé de modalité). 
-La différence entre la table de données (data.frame) et la matrice est tient notamment dans le fait que la première peut contenir des éléments mixtes. 
+Ces objets peuvent contenir des éléments de type numérique, booléen (logical : TRUE, FALSE), chaîne de caractère (string), facteur (factor, pour les variables qualitatives prenant un nombre déterminé de modalités). 
+La différence entre la table de données (data.frame) et la matrice tient notamment dans le fait que la première peut contenir des éléments de types différents. 
 
 ### Objets et opérations simples
 
@@ -41,6 +46,10 @@ element_b
 element_c <- element_a/2 + 2*element_b # les opérations -, *, /, sqrt pour racine, ^ pour puissance, log, exp, sont également possibles !
 element_c
 ```
+
+
+
+**Vecteurs**
 
 On peut travailler très naturellement sur des vecteurs 
 
@@ -62,13 +71,17 @@ Dans le cas où le vecteur correspond à une séquence de nombres, on peut utiliser
 ```{r message=FALSE, warning=FALSE}
 vecteur_a <- c(2,3,4) 
 vecteur_b <- 2:4
-vecteur_c <- seq(2,4,1) # les arguments de la fonction seq (séquence) correspondent à from, to, by (à partir de 1, jusqu'à 10, avec des écarts de 2)
+vecteur_c <- seq(2,4,1) # les arguments de la fonction seq (séquence) correspondent à from, to, by (à partir de 2, jusqu'à 4, avec des écarts de 1)
+```
 
+Remarque, si on ne sait plus la signification des trois arguments de `seq`, on peut aller dans l'aide avec `?seq`
+
+```{r message=FALSE, warning=FALSE}
 vecteur_a == vecteur_b # compare les éléments un à un
 variable_logique_a <- vecteur_a == vecteur_b
 ```
 
-Les opérations sur les vecteurs sont très proches des opérations sur les éléments. Une opération entre un vecteur a et un vecteur b revient à réaliser l'opération entre les couples d'éléments issus des deux vecteurs et situés à la même place (il faut que les vecteurs admettent la même taille pour que ça ait un sens)
+Les opérations sur les vecteurs sont très proches des opérations sur les éléments. Une opération entre un vecteur a et un vecteur b revient à réaliser l'opération entre les couples d'éléments issus des deux vecteurs et situés à la même place (il faut que les vecteurs aient la même taille pour que ça ait un sens)
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -94,13 +107,15 @@ length(vecteur_a)
 Il peut-être trié :
 
 ```{r message=FALSE, warning=FALSE}
-vecteur_d <- c(3,2,1)
+vecteur_d <- c(3,1,2)
 order(vecteur_d)
 sort(vecteur_d)
 ```
 
 
-Remarque, si on ne sait plus la signification des trois arguments de `seq`, on peut aller dans l'aide avec `?seq`
+
+
+**Listes**
 
 ```{r message=FALSE, warning=FALSE}
 liste_a <- list(2,3,5)
@@ -114,7 +129,7 @@ Pour concaténer deux listes
 
 ```{r message=FALSE, warning=FALSE}
 liste_a
-append(liste_a, element_a) # ou liste_b à la place de element_a pour concaténer deux listes
+liste_a <- append(liste_a, element_a) # ou liste_b à la place de element_a pour concaténer deux listes
 liste_a
 ```
 
@@ -132,7 +147,8 @@ unlist(liste_a)
 ```
 
 
-Pour les matrices : 
+
+**Matrices**
 
 ```{r message=FALSE, warning=FALSE}
 matrice_a <- matrix(1:15,ncol=5) # exemple d'une matrice remplie des chiffres consécutifs de 1 à 15 rangés sur 5 colonnes 
@@ -144,13 +160,22 @@ matrice_a[1,2] # pour récupérer l'élément de la première ligne et de la deuxième
 Par défaut, les opérations mathématiques simples se font élément par élément 
 
 ```{r message=FALSE, warning=FALSE}
-matrice_b <- 2*matrice_a
+matrice_b <- 3*matrice_a
 matrice_a
 matrice_b
 matrice_b - matrice_a # les opérations se font éléments par élément
 
 t(matrice_b)%*% matrice_a # pour faire des vrais produits matriciels, on utilise l'opérateur %*%, ici t() indique que l'on prend également la transposée
 ``` 
+
+
+Les dimensions de la matrice peuvent être obtenues de la manière suivante :
+
+```{r message=FALSE, warning=FALSE}
+nrow(matrice_a)
+ncol(matrice_a)
+dim(matrice_a)
+```
 
 
 Pour concaténer deux matrices, on peut soit les mettre côte à côte (`cbind`), soit les empiler (`rbind`). Ces fonctions fonctionnent aussi pour les data.frames.
@@ -164,13 +189,8 @@ matrice_d
 dim(matrice_d)
 ``` 
 
-Les dimensions de la matrice peuvent être obtenues de la manière suivante :
 
-```{r message=FALSE, warning=FALSE}
-nrow(matrice_a)
-ncol(matrice_a)
-dim(matrice_a)
-```
+**Data.frame**
 
 Les tables de données ou data.frame est sans doute le format qu'on utilisera le plus dans la suite. 
 
@@ -235,7 +255,7 @@ for (i in 1:nb_col){
 }
 ``` 
 
-En réalité, les boucles sont à éviter en R, elles ne sont pas efficaces, on leur préférera la fonction `lapply` qui distribue la fonction souhaitée sur chaque élément d'une liste. Un data.frame peut-être vu comme une liste de vecteurs. 
+En réalité, les boucles sont à éviter en R, elles ne sont pas efficaces, on leur préférera la fonction `lapply` qui distribue la fonction souhaitée sur chaque élément d'une liste (et retourne une liste). Un data.frame peut-être vu comme une liste de vecteurs. 
 
 ```{r message=FALSE, warning=FALSE}
 mean_col <- lapply(df_a, mean) # ici la fonction est particulièrement simple car mean est déjà une fonction R
@@ -297,7 +317,7 @@ sapply(vecteur_d, function(x) fonction_personnalisee(x))
 abs(vecteur_d) # rmq : abs permet de passer un élément en valeur absolue (s'applique également aux vecteurs sans recours à lapply)
 ```
 
-Ici on a inclus la condition dans une fonction, mais ce n'est pas indispensable ! On peut vouloir aussi tester la différence `!=` plutôt que l'égalité, '<' ou '>', et si on a plusieurs conditions, on mettra chacune entre parenthèse et on utilisera `|` pour dire "ou" et `&` pour dire "et" (par exemple `(b-3==a) & (b>=a)`).
+Ici on a inclus la condition dans une fonction, mais ce n'est pas indispensable ! On peut vouloir aussi tester la différence `!=` plutôt que l'égalité, `<` ou `>`, et si on a plusieurs conditions, on mettra chacune entre parenthèse et on utilisera `|` pour dire "ou" et `&` pour dire "et" (par exemple `(b-3==a) & (b>=a)`).
 
 Parfois, on n'a pas besoin de passer par `if` pour appliquer une condition, par exemple si on veut récupérer seulement les éléments de vecteur_d supérieurs ou égaux à 0. Cela revient à dire qu'on teste la condition sur chaque élément et qu'on conserve vecteur_d[i] pour i tel que vecteur_d[i]>=0
  
@@ -334,9 +354,9 @@ On peut récupérer une partie d'une chaine de caractère simplement
 ```{r message=FALSE, warning=FALSE}
 character_a <- 'departement_a' 
 class(character_a)
-substr(character_a,1,10)
-strsplit(character_a,'_')
-strsplit(character_a,'_')[[1]][[2]]
+substr(character_a,1,10) #les arguments correspondent à la chaine, au début de la sous-chaîne que l'on veut récupérer, et à la fin de la sous-chaîne que l'on veut récupérer
+strsplit(character_a,'_') #les arguments correspondent à la chaine et au caractère qui au niveau duquel on veut couper
+strsplit(character_a,'_')[[1]][[2]] #le résultat est une liste donc on utilise les doubles crochets pour récupérer l'élément qui nous intéresse
 ```
 
 La taille d'une chaine de caractères correspond au nombre de caractères 
@@ -379,6 +399,9 @@ as.numeric(as.character(facteurs))
 ```
 
 
+
+
+
 # Générer des variables aléatoires 
 
 On a souvent besoin de générer des nombres aléatoires, par exemple pour tirer un échantillon dans les lignes d'une table, le plus simple est d'utiliser `sample` : 
@@ -395,11 +418,11 @@ set.seed(123) # permet de reproduire les mêmes résultats d'une fois sur l'autre 
 n <- 50
 Y <- rnorm(n,20,5)
 
-mean(Y) # moyenne
-sd(Y) # écart-type
-sd(Y)/sqrt(length(Y)) # écart-type de la moyenne
+mean(Y) # moyenne empirique
+sd(Y) # écart-type empirique
+sd(Y)/sqrt(length(Y)) # écart-type de la moyenne empirique
 
-summary(Y) # quartiles et moyenne
+summary(Y) # quartiles et moyenne empiriques
 ```
 
 On peut représenter graphiquement cette variable 
@@ -409,10 +432,10 @@ boxplot(Y) # diagramme boîte
 
 hist(Y, probability=T, col="blue") # histogramme de la densité
 
-lines(density(Y), col="red", lwd=2) # estimation par la méthode du noyau
+lines(density(Y), col="red", lwd=2) # lissage de l'histogramme
 # tracer la loi théorique
 x <- 1:100
-curve(dnorm(x,mean=20,sd=5),add=TRUE,col="green",lwd=2) # l'argument add permet de rajouter ce contour sur le graphique
+curve(dnorm(x,mean=20,sd=5),add=TRUE,col="green",lwd=2) # l'argument add permet de rajouter cette courbe sur le même graphique, il s'agit de la distribution théorique
 ```
 
 On peut générer des observations tirées dans une loi uniforme sur [a,b]
@@ -431,6 +454,7 @@ Vous pouvez augmenter la valeur de `n` pour voir ce que ça donne
 Pour cette entrée en matière de l'exploration d'un vrai fichier de donnée, nous nous sommes fortement inspirés de l'exercice suivant https://www.math.univ-toulouse.fr/~besse/Wikistat/pdf/st-scenar-statlab.pdf
 
 Une  étude réalisée  entre  1961  et  1973  dans  la  maternité  d'un  hôpital d'Oakland  (Californie)  avait  pour  but  de  rechercher  si  certaines  caractéristiques  des  parents  avaient  une  influence  sur  le  développement  de  l'enfant. Parmi les variables collectées, 19 variables décrites dans le tableau ci-dessous ont  été  observées  sur  115  familles  ou  unités  statistiques.  Ces  variables  décrivent des informations médicales et socio-économiques concernant le bébé et ses parents au moment de la naissance puis dix ans plus tard, permettant ainsi de se poser différentes questions de nature plutôt épidémiologique :
+
 -  Influence ou non de la consommation de cigarettes sur le sexe de l'enfant, sur son poids, sur sa taille,
 -  sur l'évolution du poids de la mère en 10 ans,
 -  sur les liaisons entre les caractéristiques des parents (poids, taille, rhésus) et celles de leur enfant
@@ -446,11 +470,12 @@ dim(famil) # combien de colonnes et de ligne
 summary(famil) # quelques statistiques classiques
 ```
 
-La fonction `summary` fournit déjà beaucoup d'information sur chaque variable. Mais on pourrait réappliquer les fonctions vues précedemment pour calculer ces indicateurs et/ou les représenter graphiquement (moyenne, écart-type, quantiles, diagramme boîte, histogramme). Cela permet notamment de repérer les valeurs atypiques, l'hétérogénéité des variances, les distributions dissymétriques... 
+La fonction `summary` fournit déjà beaucoup d'information sur chaque variable. Mais on pourrait réappliquer les fonctions moyenne, écart-type, quantiles, diagramme boîte, histogramme, indépendamment, sur toutes les variables ou certaines en particulier. 
 
 
 ```{r message=FALSE, warning=FALSE}
 sapply(famil, mean) # les moyennes de chaque variable 
+sapply(famil, function(x) mean(x,na.rm = T)) # les moyennes de chaque variable en ignorant les valeurs manquantes
 sapply(famil, sd) # les écarts type
 boxplot(famil$ET0) # taille de l'enfant
 boxplot(famil$EP0) # poids de l'enfant
@@ -470,7 +495,7 @@ pie(table(famil$MCig10)) # consommation de cigarettes dix ans après
 Pour analyser grossièrement les liaisons, on peut regarder un nuage de points 
 
 ```{r message=FALSE, warning=FALSE}
-pairs(famil[,c(3:6,8,9,11,12,14,16:19)])
+pairs(famil[,c(3:6,8,9,11)])
 plot(EP10~PP10,data=famil) # poids de l'enfant à 10 ans, poids du père
 plot(EP10~ET10,data=famil) # poids de l'enfant à 10 ans, taille à 10 ans
 ```
@@ -500,9 +525,20 @@ boxplot(EP0~ESx,data=famil) # poids de l'enfant vs sexe
 boxplot(EP0~MCig0,data=famil) # poids de l'enfant vs consommation de cigarettes
 ```
 
+Remarque, les modalités de `Mcig0` ne sont pas dans l'ordre le plus naturel, on peut décider de réordonner les modalités.
+
+```{r message=FALSE, warning=FALSE}
+famil$MCig0 <- factor(famil$MCig0, levels = c("0cig", "1-10cig", ">10cig"))
+
+famil$MCig10 <- factor(famil$MCig10, levels = c("0cig", "1-10cig", ">10cig"))
+boxplot(EP0~MCig0,data=famil) # poids de l'enfant vs consommation de cigarettes
+```
+
+
+
 ### Tests de liaison
 
-Quelques tests, imaginons qu'on veuille tester l'indépendance de deux variables qualitatives. Le test du $\Khi^2$ sera adapté à ce problème (dans le cas 
+Quelques tests, imaginons qu'on veuille tester l'indépendance de deux variables qualitatives. Le test du $\chi^2$ sera adapté à ce problème (dans le cas 
 où les effectifs d'une modalité sont trop faibles, il faut regrouper les modalités). 
 
 ```{r message=FALSE, warning=FALSE}
@@ -536,6 +572,7 @@ t.test(famil$MP0, famil$MP10,paired=TRUE)
 ```
 
 Remarques : 
+
 - si l'hypothèse de normalité des distributions n'est pas vérifiée et si l'échantillon est trop réduit, c'est un test non-paramétrique qu'il faut mettre en ouvre. Les tests non-paramétriques sont basés sur les rangs des observations et donc sur les comparaisons des médianes des échantillons (wilcoxson). 
 
 - Si l'on veut tester l'indépendance entre une variable qualitative et quantitative, l'ANOVA associée à un test de Fisher est sans doute le test le plus utilisé ; il revient au test de Student lorsque la variable qualitative n'a que deux modalités.
@@ -547,7 +584,7 @@ La régression simple permet de tester l'influence éventuelle d'une variable sur 
 
 
 ```{r message=FALSE, warning=FALSE}
-res1.reg=lm(ET10 ~ PT, data = famil)
+res1.reg <- lm(ET10 ~ PT, data = famil)
 names(res1.reg) # liste des résultats
 ```
 
@@ -563,7 +600,7 @@ shapiro.test(res1.reg$residuals)
 Les résidus sont "grands" si, une fois normalisés ou plutôt "studentisés", ils sont de valeur absolue plus grande que 2. 
 
 ```{r message=FALSE, warning=FALSE}
-res.student=rstudent(res1.reg)
+res.student <- rstudent(res1.reg)
 ychap=res1.reg$fitted.values
 plot(res.student~ychap,ylab="Résidus") 
 abline(h=c(-2,0,2),lty=c(2,1,2)) # rajoute une ligne horizontale
@@ -572,7 +609,7 @@ abline(h=c(-2,0,2),lty=c(2,1,2)) # rajoute une ligne horizontale
 Une observation est influente si elle a un grand résidu est est associée à une grande valeur sur la diagonale de la hat matrix. Cela correspond à une valeur élevée (plus grande que 1) de la distance de Cook.
 
 ```{r message=FALSE, warning=FALSE}
-cook=cooks.distance(res1.reg) # repérage de points influents
+cook <- cooks.distance(res1.reg) # repérage de points influents
 plot(cook~ychap,ylab="Distance de Cook")
 abline(h=c(0,1),lty=c(1,2))
 ```
@@ -586,7 +623,7 @@ summary(res1.reg)
 La régression linéaire simple conduit à un modèle très mal ajusté. Le modèle linéaire multiple ci-dessous, plus complexe, recherche un meilleur ajustement des données.
 
 ```{r message=FALSE, warning=FALSE}
-res2.reg=lm(ET10~ET0+EP0+MA0+MP0+MT+MP10+PA0+PT+PP10+RF0+RF10, data = famil)
+res2.reg <- lm(ET10~ET0+EP0+MA0+MP0+MT+MP10+PA0+PT+PP10+RF0+RF10, data = famil)
 plot(res2.reg) # diagnostics des résidus
 summary(res2.reg) # résultats 
 ```
@@ -606,19 +643,17 @@ On peut sinon taper la commande :
 
 
 ```{r message=FALSE, warning=FALSE}
-data=famil[,c(3:6,8,9,11,12,14,16:19)] # liste des varaibles quantitatives
+data <- famil[,c(3:6,8,9,11,12,14,16:19)] # liste des varaibles quantitatives
 
-noms=dimnames(data)[[2]];noms
-names(data)
+noms <- names(data)
 
-res.pca=prcomp(data,scale=T)
+res.pca <- prcomp(data,scale=T)
 plot(res.pca) # décroissance des valeurs propres
 
 summary(res.pca) # parts de variance expliquée
 
-biplot(res.pca) # biplot du premier plan principal
-plot(res.pca$x,col=as.integer(famil$MCig0))
-text(10*res.pca$rotation,noms,col="blue")
+plot(res.pca$x,col=c('black','red','green')[famil$MCig0]) # les observations sont représentées dans le plan des deux composantes principales résumant le mieux l'information contenue dans les données, la couleur permet de distinguer la consommation de cigarette (noir pour la consommation la plus élevée) 
+text(10*res.pca$rotation,noms,col="blue") # on peut afficher également les variables pour interpréter les axes, on voit que l'axe vertical rend surtout compte des revenus tandis que l'axe horizontal est plus lié à la taille et au poids de l'enfant et des parents. 
 abline(h=0,v=0,lty=2)
 ```
 
@@ -631,7 +666,7 @@ lendemain, un questionnaire papié renseigné en temps réel en parallèle de la pri
 
 ```{r message=FALSE, warning=FALSE}
 urgences <- read.csv2("enq_urgences_structure.csv", sep=',') # lecture du fichier csv
-head(urgences) # aperçu du haut des données
+head(urgences) # aperçu du début des données
 dim(urgences) # combien de colonnes et de ligne 
 #names(urgences)
 dim(urgences)
