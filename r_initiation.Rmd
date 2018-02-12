@@ -7,6 +7,9 @@ output:
 ---
 
 
+<br/>
+
+
 **Qu'est ce que R ?**
 
 R (https://www.r-project.org/) est un langage de programmation dédié à l'analyse statistique. Libre et gratuit, disponible sur toutes les plateformes (Mac OS, Windows, Linux), il s'est largement imposé ces dernières années dans le domaine des sciences humaines et de la datascience. R dispose par défaut d'instructions de base permettant de réaliser les opérations les plus courantes. De nouvelles fonctionnalités, regroupées en packages, peuvent être facilement ajoutées pour venir enrichir les possibilités du langage. Le point fort de R par rapport à des logiciels à interfaces graphiques, est qu'il permet très facilement l'automatisation et la reproductibilité des traitements.
@@ -25,7 +28,7 @@ setwd('C:/Users/Stephanie/Desktop/R_initiation')
 Dans Rstudio pour compiler une ligne, vous pouvez placer le curseur dessus et cliquer sur Run, ou bien utiliser le raccourci clavier ctrl+entrée
 
 
-
+<br/>
 
 
 # Opérations de base
@@ -400,6 +403,7 @@ as.numeric(as.character(facteurs))
 
 
 
+<br/>
 
 
 # Générer des variables aléatoires 
@@ -447,6 +451,7 @@ hist(X)
 
 Vous pouvez augmenter la valeur de `n` pour voir ce que ça donne 
 
+<br/>
 
 
 # Lecture et exploration de données 
@@ -657,6 +662,8 @@ text(10*res.pca$rotation,noms,col="blue") # on peut afficher également les varia
 abline(h=0,v=0,lty=2)
 ```
 
+<br/>
+
 
 # Exploration avancée sur données des urgences 
 
@@ -667,7 +674,7 @@ lendemain, un questionnaire papié renseigné en temps réel en parallèle de la pri
 ```{r message=FALSE, warning=FALSE}
 urgences <- read.csv2("enq_urgences_structure.csv", sep=',') # lecture du fichier csv
 head(urgences) # aperçu du début des données
-dim(urgences) # combien de colonnes et de ligne 
+dim(urgences) # combien de colonnes et de lignes 
 #names(urgences)
 dim(urgences)
 ```
@@ -676,12 +683,12 @@ Remarque, si le fichier était au format xls, on pourrait l'ouvrir, par exemple, 
 
 ```{r message=FALSE, warning=FALSE}
 library("xlsx")
-urgences2 <- read.xlsx("enq_urgences_structure.xls",1) # 1 correspond ici à l'index de la page 1 de l'excel
+urgences2 <- read.xlsx("enq_urgences_structure.xls",1) # 1 correspond ici à la page 1 de l'excel
 head(urgences2) # aperçu du haut des données
 dim(urgences2)
 ```
 
-Pour chaque heure de pointage (8h, 12h, 18h, 22h, 8h) indiquée par les lettres A, B, C, D, E, on retient pour l'exercice les variables suivantes (cf questionnaire dans le dossier) :
+Pour chaque heure de pointage (8h, 12h, 18h, 22h, 8h) indiquée par les lettres A, B, C, D, E, on retient pour l'exercice les variables suivantes (cf questionnaire dans le dossier de la formation) :
 
 Les variables de présence de patients aux urgences :
 
@@ -709,24 +716,28 @@ A103 : Nombre de passages sur les 24 heures
 A4 : type d'accueil
 A2 : numéro finess de l'établissement
 
+Pour ne garder que ces variables là, on reconstruit les noms des variables pour chaque heure de pointage. Par exemple, la variable 98 : nombre d'aide soignant, va être présente cinq fois : "ID_A87", "ID_B87", "ID_C87", "ID_D87", "ID_E87". On va utiliser `lapply` et `paste` (qui concatène les chaines de caractères) pour reconstituer tous les noms de variables qu'on veut garder pour toutes les heures de pointages. `rep` est une fonction qui répète plusieurs fois le même élément.
+
 ```{r message=FALSE, warning=FALSE}
 col_a_garder <- c(87:90,92:101)
 nbcol <- length(col_a_garder)
-col_a_garder <- unlist(lapply(c('A','B','C','D','E'), function(lettre) paste(rep('ID_',nbcol),rep(lettre,nbcol),col_a_garder,sep=''))) 
+paste(rep('ID_',nbcol),rep('A',nbcol),col_a_garder,sep='') # génère la liste des variables pour la première heure de pointage
+
+col_a_garder <- unlist(lapply(c('A','B','C','D','E'), function(lettre) paste(rep('ID_',nbcol),rep(lettre,nbcol),col_a_garder,sep=''))) # génère les 5 listes de variables en une seule ligne de code
 col_a_garder
 col_a_garder <- c(col_a_garder, "ID_A103","ID_A4","ID_A2")
 urgences <- urgences[,col_a_garder]
 dim(urgences)
 ```
 
-Regardons d'abord la répartition des types d'établissement
+Regardons la répartition des types d'établissement
 
 ```{r message=FALSE, warning=FALSE}
 table(urgences$ID_A4) # répartition des structures
 ```
 
 
-On va regarder la distribution du nombre de passages total dans l'établissement, c'est un proxy de la taille de ce dernier. On va créer des modalités pour comparer des services d'urgences comparables. Pour les graphiques, on va désormais utiliser la librairie `ggplot2`, installez-là si elle n'est pas installée.
+On va regarder la distribution du nombre de passages total dans les établissements, c'est un proxy de la taille de ces derniers. On va créer des modalités pour identifier les services d'urgences comparables. Pour les graphiques, on va désormais utiliser la librairie `ggplot2`, installez-là si elle n'est pas installée. `aes` permet de définir les variables qui vont être utilisées.
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -737,7 +748,7 @@ Comparons cette distribution par type de structure :
 
 
 ```{r message=FALSE, warning=FALSE}
-p <- ggplot(urgences, aes(x=ID_A103, fill = ID_A4)) + geom_histogram(alpha=0.4) + theme(legend.position="top") # en précisant la couleur par un nom de variables, on demande le tracé d'un histogramme pour chaque modalité 
+p <- ggplot(urgences, aes(x=ID_A103, fill = ID_A4)) + geom_histogram(alpha=0.4) + theme(legend.position="top") # en précisant la couleur par un nom de variable, on demande le tracé d'un histogramme pour chaque modalité 
 p
 ```
 
@@ -748,7 +759,7 @@ library(plotly)
 ggplotly(p)
 ```
 
-On va désormais transformer cette variable en variable qualitative pour rassembler les établissements par proxy de taille 
+On va désormais transformer cette variable en variable qualitative pour rassembler les établissements de taille similaire 
 
 ```{r message=FALSE, warning=FALSE}
 valeurs_manquantes <- is.na(urgences$ID_A103) # on regarde si la variable admet des valeurs manquantes, 
@@ -761,21 +772,21 @@ dim(urgences)
 
 # on crée une nouvelle colonne
 urgences$nb_passages_3 <- cut(urgences$ID_A103, breaks = c(0,40,80,max(urgences$ID_A103, na.rm=T))) # max, comme la plupart des fonctions renverra une erreur si appliqué sur un vecteur contenant des NA, on les enlève pour le calcul avec l'option na.rm 
-table(urgences$nb_passages)
+table(urgences$nb_passages_3)
 ```
 
 
-On voudrait maintenant regarder le nombre de patients ou les effectifs par tranche horaire, on voit bien qu'il sera plus facile d'avoir une variable tranche horaire. Il suffit de récupérer les colonnes correspondant à chaque horaire, de les renommer, puis de les empiler en créant une colonne horaire 
+On voudrait maintenant regarder le nombre de patients ou les effectifs par tranche horaire, on voit bien qu'il serait plus facile d'avoir une variable tranche horaire que de considérer des colonnes différentes contenant tantôt un A, un B, un C etc... On va récupérer les colonnes correspondant à chaque horaire, les renommer, puis de les empiler en créant une colonne horaire 
 
 ```{r message=FALSE, warning=FALSE}
-horaire_8 <- urgences[,c(paste('ID_','A',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
+horaire_8 <- urgences[,c(paste('ID_','A',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')] # sélection des colonnes contenant un A pour chaque établissement
 horaire_12 <- urgences[,c(paste('ID_','B',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
 horaire_18 <- urgences[,c(paste('ID_','C',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
 horaire_22 <- urgences[,c(paste('ID_','D',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
 horaire_8_ <- urgences[,c(paste('ID_','E',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
 head(horaire_8)
 
-#on rajoute une colonne d'heure
+#on rajoute une colonne d'heure 
 horaire_8$heure <- '8h'
 horaire_12$heure <- '12h'
 horaire_18$heure <- '18h'
@@ -789,7 +800,7 @@ names(horaire_18) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','
 names(horaire_22) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
 names(horaire_8_) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
 
-urgences2 <- rbind(horaire_8, horaire_12, horaire_18, horaire_22, horaire_8_)
+urgences2 <- rbind(horaire_8, horaire_12, horaire_18, horaire_22, horaire_8_) # on les empile avec rbind
 dim(urgences)
 dim(urgences2)
 head(urgences2)
@@ -799,19 +810,19 @@ names(urgences2)[names(urgences2)=='ID_A4'] <- 'type_structure'
 names(urgences2)[names(urgences2)=='ID_A2'] <- 'index_structure'
 ```
 
-On peut regarder le nombre de médecin urgentiste `ID_92` en fonction de la tranche horaire et de la taille de la structure avec un graphique à boites.
+On peut regarder le nombre de médecins urgentistes `ID_92` en fonction de la tranche horaire et de la taille de la structure avec un graphique à boites.
 
 
 ```{r message=FALSE, warning=FALSE}
 sapply(urgences2, class) #attention certaines variables numériques ne sont pas considérées comme telles !
-urgences2[,1:15] <- lapply(urgences2[,1:15],function(v) as.numeric(as.character(v)))
+urgences2[,1:15] <- lapply(urgences2[,1:15],function(v) as.numeric(as.character(v))) # on les convertit
 
 p<-ggplot(data = urgences2, aes(x=heure, y=ID_92, color=nb_passages_3)) + geom_boxplot() + ylab('Effectif de médecin urgentiste')
 p
 ```
 
 
-Si on veut plutôt regarder l'évolution du nombre moyen dans le cours de la journée, il va falloir d'abord calculer cette moyenne par groupe. Pour cela on va faire appel au package `dplyr`, vous devez l'installer si ce n'est pas déjà fait.
+Si on veut plutôt regarder l'évolution du nombre moyen de médecins urgentistes dans des établissements de taille similaire au cours de la journée, il va falloir d'abord calculer cette moyenne par groupe (les groupes étant identifiés par les 3 classes construites précédemment en rendant qualitative la variable des nombres de passages et par l'heure de pointage). Pour cela on va faire appel au package `dplyr`, vous devez l'installer si ce n'est pas déjà fait.
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
@@ -829,33 +840,34 @@ ggplot(data = grouped_mean, aes(x=heure, y=mean, group = nb_passages_3, color = 
 
 Remarque : les fonctionnalités du packages `dplyr` sont bien plus riches, allez jeter un oeil à la cheatsheet data wrangling french fournie dans le dossier de la formation.
 
-Maintenant on va regarder l'évolution de la distribution des effectifs de personnels et de patients dans le temps. Pour présenter les différents graphiques côte à côte, on va utiliser l'option `facet` de `ggplot2` mais avant cela, il faut retravailler encore sur la forme des données. Commençons par regarder les distributions d'effectifs de professionnels, donc les variables de 
+Maintenant on va regarder l'évolution de la distribution des effectifs de personnels dans le temps, sans se limiter aux médecins urgentistes. Pour présenter les différents graphiques côte à côte, on va utiliser l'option `facet` de `ggplot2` mais avant cela, il faut retravailler encore la forme des données. Commençons par regarder les distributions d'effectifs de professionnels, donc les variables de 90 à 101, que l'on va rendre plus intelligible dans un premier temps.
 
 ```{r message=FALSE, warning=FALSE}
 urgences_ps <- urgences2[,c('index_structure','nb_passages_3','heure','ID_90','ID_92','ID_93','ID_94','ID_95','ID_96','ID_97','ID_98','ID_99','ID_100','ID_101')]
-names(urgences_ps)[4:length(urgences_ps)] <-c('med urgentistes', 'med non urgentistes','internes','médecins int et ext', 'cadres','IDE','AS','ASH','secrétaires','brancardiers') 
+names(urgences_ps)[4:length(urgences_ps)] <-c('med urgentistes', 'med non urgentistes','internes','médecins int et ext', 'cadres','IDE','AS','ASH','secrétaires','brancardiers') # on rend les colonnes plus intelligibles
 library(reshape)
-urgences_ps <- melt(urgences_ps, id=c("index_structure","nb_passages_3",'heure'))
+urgences_ps <- melt(urgences_ps, id=c("index_structure","nb_passages_3",'heure')) 
 head(urgences_ps)
 names(urgences_ps)[4:5] <-c('PS','effectif')
 head(urgences_ps)
 ```
 
-On a donc créé une variable PS qui prend plusieurs modalités et on a pour chaque structure d'urgence identifiée par l'identifiant ID_A2, une ligne par profession avec les effectifs corresponds. Cette représentation rend la représentation graphique quasi immédiate avec `ggplot2`
+On a donc créé une variable PS (pour professionnel de santé) qui prend plusieurs modalités et on a, pour chaque structure d'urgence identifiée par l'identifiant ID_A2, une ligne par profession avec les effectifs correspondants. Cette représentation rend la représentation graphique quasi immédiate avec `ggplot2`
 
 ```{r message=FALSE, warning=FALSE}
 urgences_ps$heure = factor(urgences_ps$heure , levels=c("8h", "12h", "18h", "22h", "8h_")) # on transforme la variable en facteur et on ordonne les heures
+
 p <- ggplot(urgences_ps, aes(x=PS, y=effectif, fill=PS)) + geom_bar(stat = "identity") + facet_grid(as.factor(heure) ~ nb_passages_3) + theme(        axis.ticks.x=element_blank(),axis.text.x=element_blank())
 p
 # theme permet de retirer la légende sous l'axe des x, si vous retirez ce bout de code vous verrez la différence
-# facet_grid permet de produire plusieurs graphique en fixant une variable ici le nombre de passage ou l'heure de pointage
+# facet_grid permet de produire plusieurs graphiques en fixant une variable ici le nombre de passage ou l'heure de pointage
 ```
 
 
-**Le même exercice peut être réalisé pour la distribution des types de patients.**
+**Le même exercice peut être réalisé pour la distribution des types de patients, à vous de jouer**
 
 
-Enfin, nous allons représenter la répartition des structures d'urgence en France. Pour cela nous allons utiliser la table sas `ej.sas7bdat` qui lie les codes FINESS des établissements avec leurs coordonnées géographiques. Cette base est stockée dans un format SAS, on va utiliser la librairie `haven` pour la lire.   
+Enfin, nous allons représenter la répartition géographique des structures d'urgence en France. Pour cela nous allons utiliser la table sas `ej.sas7bdat` qui relie les codes FINESS des établissements avec leurs coordonnées géographiques. Cette base est stockée dans un format SAS, on va utiliser la librairie `haven` pour la lire.   
 
 ```{r message=FALSE, warning=FALSE}
 library(haven)
@@ -873,7 +885,7 @@ dim(urgences_loc)
 dim(ej)
 ```
 
-Le fait d'avoir indiqué l'option `all.x = TRUE` force à garder toutes les lignes de `urgences` même quand il n'existe pas de match possible. Ici certains codes finess ne semblent pas avoir de coordonnées géographiques disponibles. On ne va conserver que les structures qui ont des coordonnées 
+Le fait d'avoir indiqué l'option `all.x = TRUE` force à garder toutes les lignes de `urgences` même quand il n'existe pas de match possible. Ici certains codes finess ne semblent pas avoir de coordonnées géographiques disponibles. On ne va conserver que les structures qui ont des coordonnées grâce à `na.omit` 
 
 ```{r message=FALSE, warning=FALSE}
 urgences_loc_sans_na <- na.omit(urgences_loc)
