@@ -1,8 +1,26 @@
+<style>
+body .main-container {
+max-width: 1000px;
+}
+.footer {
+    color: black;
+    background: #E8E8E8;
+    position: fixed;
+    top: 90%;
+    text-align:center;
+    width:100%;
+}
+</style>
+
+
 Initiation à R
 ========================================================
 author: DREES
 date: `r Sys.Date()`
-autosize: true
+autosize: false
+width: 2200
+height: 1000
+css:style.css
 
 Qu'est ce que R ?
 ========================================================
@@ -605,9 +623,9 @@ sample(1:100,10,replace=F) # on tire 5 éléments sans remise entre 1 et 100, l'
 ```
 On peut bien sûr pondérer le tirage
 
-```{r message=FALSE, warning=FALSE, fig.align='center'}
+```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20}
 tirage_pondere<-sample(1:100,10,replace=T,prob=(1/1:100)) #Ainsi on tire surtout des petits nombres
-hist(tirage_pondere)
+hist(tirage_pondere,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
 Génération d'aléa - tirage gaussien [rnorm]
@@ -630,15 +648,15 @@ Génération d'aléa - visualisation du tirage [boxplot]
 ========================================================
 On peut représenter graphiquement cette variable 
  
-```{r message=FALSE, warning=FALSE, fig.align='center'}
-boxplot(Y) # diagramme boîte
+```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20}
+boxplot(Y,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # diagramme boîte
 ```
 
 
 Génération d'aléa - visualisation du tirage [hist & lines & curves]
 ========================================================
-```{r message=FALSE, warning=FALSE, fig.align='center'}
-hist(Y, probability=T, col="blue") # histogramme de la densité
+```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20}
+hist(Y, probability=T, col="blue",cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # histogramme de la densité
 lines(density(Y), col="red", lwd=2) # lissage de l'histogramme
 # tracer la loi théorique
 x <- 1:100
@@ -649,9 +667,9 @@ Génération d'aléa - tirage uniforme [runif]
 ========================================================
 On peut générer des observations tirées dans une loi uniforme sur [a,b]
  
-```{r message=FALSE, warning=FALSE, fig.align='center'}
+```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20}
 X <- runif(n,50,100)
-hist(X)
+hist(X,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
 Vous pouvez augmenter la valeur de `n` pour voir ce que ça donne 
@@ -696,14 +714,14 @@ sapply(famil, sd) # les écarts type
 Visualisation Univariée quanti [boxplot]
 ========================================================
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-boxplot(famil$ET0) # taille de l'enfant
+boxplot(famil$ET0,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # taille de l'enfant
 ```
 
 Visualisation Univariée quanti [hist]
 ========================================================
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-hist(famil$EP0)# poids de l'enfant
+hist(famil$EP0,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)# poids de l'enfant
 ```
 
 
@@ -713,7 +731,7 @@ Pour les variables qualitatives, on aura plutôt tendance à considérer les fr�
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
 table(famil$ESx)
-barplot(table(famil$ESx)) # sexe de l'enfant
+barplot(table(famil$ESx),cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # sexe de l'enfant
 
 ```
 
@@ -722,7 +740,7 @@ Visualisation Univariée quali [hist]
 Pour les variables qualitatives, on aura plutôt tendance à considérer les fréquences des modalités.
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-barplot(table(famil$MCig0)) # consommation de cigarettes
+barplot(table(famil$MCig0),cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # consommation de cigarettes
 ```
 
 Visualisation Univariée quali [pie]
@@ -730,7 +748,7 @@ Visualisation Univariée quali [pie]
 Pour les variables qualitatives, on aura plutôt tendance à considérer les fréquences des modalités.
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-pie(table(famil$MCig10)) # consommation de cigarettes dix ans après 
+pie(table(famil$MCig10),cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # consommation de cigarettes dix ans après 
 ```
 
 Visualisation Bivariée quanti [pairs]
@@ -739,14 +757,14 @@ Visualisation Bivariée quanti [pairs]
 Pour analyser grossièrement les liaisons, on peut regarder un nuage de points 
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-pairs(famil[,c(3:6,8,9,11)])
+pairs(famil[,c(3:6,8,9,11)],cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
 Visualisation Bivariée quanti [plot]
 ========================================================
 
-```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-plot(EP10~PP10,data=famil) # poids de l'enfant à 10 ans, poids du père
+```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,output.}
+plot(EP10~PP10,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant à 10 ans, poids du père
 ```
 Visualisation Bivariée quanti [plot & lm & abline]
 ========================================================
@@ -754,8 +772,8 @@ Visualisation Bivariée quanti [plot & lm & abline]
 On peut facilement ajouter la droite de regression
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-plot(EP10~ET10,data=famil) # poids de l'enfant à 10 ans, taille à 10 ans
-abline(lm(EP10 ~ ET10,data = famil))
+plot(EP10~ET10,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant à 10 ans, taille à 10 ans
+abline(lm(EP10 ~ ET10,data = famil),cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
 Analyse Bivariée quali [table & addmargins]
@@ -774,7 +792,7 @@ Une manière de représenter graphiquement ces tables est d'utiliser une moisaiq
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
 prop.table(table(famil$ESx,famil$ERh)) # fréquences relatives
-mosaicplot(table(famil$ESx,famil$ERh))
+mosaicplot(table(famil$ESx,famil$ERh),cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
 
@@ -783,7 +801,7 @@ Visualisation Bivariée quali [mosaicplot]
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
 addmargins(table(famil$MCig0,famil$ESx)) # consommation de cigarette et sexe de l'enfant
-mosaicplot(table(famil$MCig0,famil$ESx))
+mosaicplot(table(famil$MCig0,famil$ESx),cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
 Visualisation Bivariée quali x quanti [boxplot]
@@ -792,14 +810,14 @@ Visualisation Bivariée quali x quanti [boxplot]
 Si l'on veut croiser variables qualitatives et quantitatives, on peut utiliser les boites 
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-boxplot(EP0~ESx,data=famil) # poids de l'enfant vs sexe
+boxplot(EP0~ESx,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant vs sexe
 ```
 
 Visualisation Bivariée quali x quanti [boxplot]
 ========================================================
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-boxplot(EP0~MCig0,data=famil) # poids de l'enfant vs consommation de cigarettes
+boxplot(EP0~MCig0,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant vs consommation de cigarettes
 ```
 
 Manipulation des données - ordre des modalités
@@ -810,7 +828,7 @@ Remarque, les modalités de `Mcig0` ne sont pas dans l'ordre le plus naturel, on
 famil$MCig0 <- factor(famil$MCig0, levels = c("0cig", "1-10cig", ">10cig"))
 
 famil$MCig10 <- factor(famil$MCig10, levels = c("0cig", "1-10cig", ">10cig"))
-boxplot(EP0~MCig0,data=famil) # poids de l'enfant vs consommation de cigarettes
+boxplot(EP0~MCig0,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant vs consommation de cigarettes
 ```
 
 
@@ -877,8 +895,8 @@ Régression linéaire - Visualisation [qqnorm & qqline]
 Les graphiques suivants permettent de s'assurer de la validité du modèle, et notamment de statuer sur l'homoscédasticité des résidus, leur normalité, la bonne linéarité du modèle.
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-qqnorm(res1.reg$residuals) # normalité des résidus
-qqline(res1.reg$residuals)
+qqnorm(res1.reg$residuals,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # normalité des résidus
+qqline(res1.reg$residuals,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
 
@@ -896,7 +914,7 @@ Les résidus sont "grands" si, une fois normalisés ou plutôt "studentisés", i
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
 res.student <- rstudent(res1.reg)
 ychap=res1.reg$fitted.values
-plot(res.student~ychap,ylab="Résidus") 
+plot(res.student~ychap,ylab="Résidus",cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) 
 abline(h=c(-2,0,2),lty=c(2,1,2)) # rajoute une ligne horizontale
 ```
 
@@ -906,7 +924,7 @@ Une observation est influente si elle a un grand résidu est est associée à un
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
 cook <- cooks.distance(res1.reg) # repérage de points influents
-plot(cook~ychap,ylab="Distance de Cook")
+plot(cook~ychap,ylab="Distance de Cook",cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 abline(h=c(0,1),lty=c(1,2))
 ```
 
@@ -925,7 +943,7 @@ La régression linéaire simple conduit à un modèle très mal ajusté. Le mod�
 
 ```{r message=FALSE, warning=FALSE}
 res2.reg <- lm(ET10~ET0+EP0+MA0+MP0+MT+MP10+PA0+PT+PP10+RF0+RF10, data = famil)
-plot(res2.reg) # diagnostics des résidus
+plot(res2.reg,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # diagnostics des résidus
 ```
 
 Régression linéaire multivarié - significativité [summary]
@@ -957,7 +975,7 @@ data <- famil[,c(3:6,8,9,11,12,14,16:19)] # liste des varaibles quantitatives
 noms <- names(data)
 res.pca <- prcomp(data,scale=T)
 # plot(res.pca) # décroissance des valeurs propres
-factoextra::fviz_eig(res.pca)
+factoextra::fviz_eig(res.pca,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
 
@@ -972,7 +990,7 @@ ACP en pratique [plot & text & abline]
 ========================================================
 
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-plot(res.pca$x,col=c('black','red','green')[famil$MCig0]) # les observations sont représentées dans le plan des deux composantes principales résumant le mieux l'information contenue dans les données, la couleur permet de distinguer la consommation de cigarette (noir pour la consommation la plus élevée) 
+plot(res.pca$x,col=c('black','red','green')[famil$MCig0],cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # les observations sont représentées dans le plan des deux composantes principales résumant le mieux l'information contenue dans les données, la couleur permet de distinguer la consommation de cigarette (noir pour la consommation la plus élevée) 
 text(10*res.pca$rotation,noms,col="blue") # on peut afficher également les variables pour interpréter les axes, on voit que l'axe vertical rend surtout compte des revenus tandis que l'axe horizontal est plus lié à la taille et au poids de l'enfant et des parents. 
 abline(h=0,v=0,lty=2)
 ```
@@ -984,7 +1002,7 @@ ACP en pratique - individus sur PC1 & PC2
 factoextra::fviz_pca_ind(res.pca,
              col.ind = "cos2", # Colorer par le cos2
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             repel = TRUE     
+             repel = TRUE,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3     
              )
 ```
 
@@ -996,7 +1014,7 @@ ACP en pratique - variables sur PC1 & PC2
 factoextra::fviz_pca_var(res.pca,
              col.var = "contrib", 
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             repel = TRUE     
+             repel = TRUE ,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3    
              )
 ```
 
@@ -1005,7 +1023,7 @@ ACP en pratique - biplot sur PC1 & PC2
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
 factoextra::fviz_pca_biplot(res.pca, repel = TRUE,
                 col.var = "#2E9FDF", 
-                col.ind = "#696969"  
+                col.ind = "#696969"  ,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3
                 )
 ```
 
@@ -1020,7 +1038,7 @@ factoextra::fviz_pca_ind(res.pca,
              addEllipses = TRUE, # Ellipse de concentration
              ellipse.type = "confidence",
              legend.title = "Groups",
-             repel = TRUE
+             repel = TRUE,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3
              )
 ```
 
