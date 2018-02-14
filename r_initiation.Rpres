@@ -1453,7 +1453,7 @@ m <- leaflet(urgences_loc_sans_na) %>% addTiles() %>%
                              radius = ~ID_A103*100, 
                              popup = ~paste(rs, ", nb de passages : ", ID_A103, ", type de structure :", ID_A4),
                              color = ~factpal(ID_A4), fillOpacity = 0.5) %>%
-                  addLegend("bottomleft", title = "Type de structure d'urgences", pal = factpal, values = ~ID_A4, opacity = 0.7)
+                  addLegend("bottomleft", title = "Type de structure d'urgences", pal = factpal, values = ~ID_A4, opacity = 0.7)%>% addProviderTiles(providers$OpenStreetMap)
 htmlwidgets::saveWidget(as.widget(m), file = "carto.html")
 ```
 
