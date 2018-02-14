@@ -223,7 +223,6 @@ Listes - Combinaison
 Pour concaténer deux listes 
 
 ```{r message=FALSE, warning=FALSE}
-liste_a
 liste_a <- append(liste_a, element_a) # ou liste_b à la place de element_a pour concaténer deux listes
 liste_a
 ```
@@ -289,7 +288,7 @@ ncol(matrice_a)
 dim(matrice_a)
 ```
 
-Matrices - Fonctions de base
+Matrices - Fonctions de base [cbind]
 ========================================================
 Pour concaténer deux matrices, on peut 
 <ul>
@@ -301,6 +300,20 @@ Ces fonctions fonctionnent aussi pour les data.frames.
 ```{r message=FALSE, warning=FALSE}
 matrice_c <- cbind(matrice_a, matrice_b)
 matrice_c
+dim(matrice_c)
+``` 
+
+
+Matrices - Fonctions de base [rbind]
+========================================================
+Pour concaténer deux matrices, on peut 
+<ul>
+<li>Soit les mettre côte à côte (`cbind`). Ici c veut dire colonne. 
+<li>Soit les empiler (`rbind`). Ici r veut dire row donc ligne.
+</ul>
+Ces fonctions fonctionnent aussi pour les data.frames.
+
+```{r message=FALSE, warning=FALSE}
 matrice_d <- rbind(matrice_a, matrice_b)
 matrice_d
 dim(matrice_d)
@@ -356,28 +369,25 @@ Formats en pratique
 Vérifions le type de ces objets avec la fonction `class`
 
 ```{r message=FALSE, warning=FALSE}
-class(element_a)
-class(vecteur_a)
-class(variable_logique_a)
-class(liste_a)
-class(matrice_a)
-class(df_a)
+c(class(element_a),
+class(vecteur_a),
+class(variable_logique_a),
+class(liste_a),
+class(matrice_a),
+class(df_a))
 ```
 
 Environment - consultation et suppression
 ========================================================
-`ls` = list segments
-`rm` = remove
-
-Ces verbes sont hérités de `bash`/`cmd`
-
-Nous avons créé un certain nombre de variables qui sont disponibles dans votre environnement (généralement en haut à droite par défaut)
+Nous avons créé un certain nombre de variables qui sont disponibles dans votre environnement (généralement en haut à droite par défaut)<br>
 On peut aussi utiliser la fonction `ls` pour voir la liste des objets dont on dispose, et `rm` pour en supprimer.
-
+`ls` = list segments<br>
+`rm` = remove<br>
+Ces verbes sont hérités de `bash`/`cmd`<br>
 ```{r message=FALSE, warning=FALSE}
-ls()
+head(ls())
 rm(element_a)
-ls()
+head(ls())
 ```
 
 Boucles - Cas d'usage
@@ -409,6 +419,21 @@ for (i in 1:nb_col){
   print('---------')}
 ``` 
 
+Boucles - for (i in vec){fonction(i)}
+========================================================
+```{r message=FALSE, warning=FALSE,echo=F}
+nb_col <- ncol(df_a) 
+mean_col <- NULL # on commence par créer une variable vide, dans laquelle on va ajouter itérativement les moyenne de chaque colonne
+for (i in 1:nb_col){
+  print(paste("numéro de la variable :",i))
+  mean_temp <- mean(df_a[[i]])
+  print(paste("moyenne de la variable i:",mean_temp))
+  mean_col <- c(mean_col, mean_temp)
+  print(paste("vecteur des moyennes",mean_col))
+  print(paste("vecteur des moyennes",paste(mean_col,collapse = " ")))#Attention paste(), comme la plupart des fonctions R est vectorielle, elle essaie donc de s'appliquer au vecteur élément par élément
+  print('---------')}
+``` 
+
 
 Boucles - apply(vec, fonction)
 ========================================================
@@ -425,16 +450,21 @@ Par exemple la fonction `lapply` qui distribue la fonction souhaitée sur chaque
 </ul>
 
 
-Boucles - sapply() et lapply()
+Boucles - [sapply]
+========================================================
+```{r message=FALSE, warning=FALSE}
+mean_col <- lapply(df_a, mean) # ici la fonction est particulièrement simple car mean est déjà une fonction R
+mean_col
+```
+Boucles - [lapply]
 ========================================================
 ```{r message=FALSE, warning=FALSE}
 mean_col <- sapply(df_a, mean) # sapply procède de même mais renvoie un vecteur
 mean_col
-mean_col <- lapply(df_a, mean) # ici la fonction est particulièrement simple car mean est déjà une fonction R
-mean_col
+
 ```
 
-Boucles - sapply() sur une fonction définie par l'utilisateur
+Fonction définie par l'utilisateur [function & return]
 ========================================================
 Admettons qu'on cherche à appliquer une fonction personnalisée 
 
@@ -442,9 +472,13 @@ Admettons qu'on cherche à appliquer une fonction personnalisée
 mean_personnalisee <- function(vect){
   return(sum(vect)/length(vect))
 }
+v=c(1,5,3,4,10)
+mean_personnalisee(v)
 ```
 
-
+Boucles - sapply() sur une fonction définie par l'utilisateur
+========================================================
+Admettons qu'on cherche à appliquer une fonction personnalisée 
 ```{r message=FALSE, warning=FALSE}
 mean_col <- sapply(df_a, function(vect) mean_personnalisee(vect))
 mean_col
@@ -458,7 +492,14 @@ Appliquée sur un vecteur, `lapply` le convertit en liste, on peut repasser à u
 fonction_personnalisee <- function(x){
   return(x*log(x))
 }
+v
+fonction_personnalisee(v)
 ```
+
+
+Boucles - lapply() sur une fonction définie par l'utilisateur
+========================================================
+Appliquée sur un vecteur, `lapply` le convertit en liste, on peut repasser à un format vecteur avec la fonction `unlist`
 
 ```{r message=FALSE, warning=FALSE}
 vecteur_a_transforme <- lapply(vecteur_a, function(x) fonction_personnalisee(x))
@@ -525,6 +566,10 @@ Souvent lorsque le type d'une colonne n'est pas clair, R lui attribura le type c
 ```{r message=FALSE, warning=FALSE}
 class(names(df_a))
 ```
+
+
+Chaînes de caractères - Fonctions de base [paste & rep]
+========================================================
 
 On peut aussi réaliser des opérations, par exemple de concaténation. Imaginons que l'on souhaite préciser les noms de colonnes en indiquant qu'il s'agit de département.
 
@@ -608,9 +653,14 @@ On a souvent besoin de générer des nombres aléatoires, par exemple pour tirer
 sample(1:100,10,replace=F) # on tire 5 éléments sans remise entre 1 et 100, l'argument replace = TRUE permet de faire un tirage avec remise.
 ```
 On peut bien sûr pondérer le tirage
-
-```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE}
 tirage_pondere<-sample(1:100,10,replace=T,prob=(1/1:100)) #Ainsi on tire surtout des petits nombres
+```
+
+Génération d'aléa - tirage multinomial [hist]
+========================================================
+
+```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20,fig.height=10}
 hist(tirage_pondere,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
 
@@ -634,14 +684,14 @@ Génération d'aléa - visualisation du tirage [boxplot]
 ========================================================
 On peut représenter graphiquement cette variable 
  
-```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20,fig.height=10}
 boxplot(Y,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # diagramme boîte
 ```
 
 
 Génération d'aléa - visualisation du tirage [hist & lines & curves]
 ========================================================
-```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE, fig.align="center",fig.width=20,fig.height=8}
 hist(Y, probability=T, col="blue",cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # histogramme de la densité
 lines(density(Y), col="red", lwd=2) # lissage de l'histogramme
 # tracer la loi théorique
@@ -660,6 +710,9 @@ hist(X,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 
 Vous pouvez augmenter la valeur de `n` pour voir ce que ça donne 
 
+Exercice 1
+========================================================
+type:section
 
 Exercice sur des données - Introduction
 ========================================================
@@ -689,7 +742,7 @@ summary(famil) # quelques statistiques classiques
 ```
 La fonction `summary` fournit déjà beaucoup d'information sur chaque variable. Mais on pourrait réappliquer les fonctions moyenne, écart-type, quantiles, diagramme boîte, histogramme, indépendamment, sur toutes les variables ou certaines en particulier. 
 
-Aperçu des données quanti [sapply & mean & sd]
+Aperçu des données quanti [sapply & mean]
 ========================================================
 ```{r message=FALSE, warning=FALSE}
 sapply(famil, mean) # les moyennes de chaque variable 
@@ -697,16 +750,23 @@ sapply(famil, function(x) mean(x,na.rm = T)) # les moyennes de chaque variable e
 sapply(famil, sd) # les écarts type
 ```
 
+Aperçu des données quanti [sapply & sd]
+========================================================
+```{r message=FALSE, warning=FALSE}
+sapply(famil, sd) # les écarts type
+```
+
+
 Visualisation Univariée quanti [boxplot]
 ========================================================
-```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,fig.height=10}
 boxplot(famil$ET0,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # taille de l'enfant
 ```
 
 Visualisation Univariée quanti [hist]
 ========================================================
 
-```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,fig.height=10}
 hist(famil$EP0,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)# poids de l'enfant
 ```
 
@@ -749,7 +809,7 @@ pairs(famil[,c(3:6,8,9,11)],cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 Visualisation Bivariée quanti [plot]
 ========================================================
 
-```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,output.}
+```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,fig.height=10}
 plot(EP10~PP10,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant à 10 ans, poids du père
 ```
 Visualisation Bivariée quanti [plot & lm & abline]
@@ -757,7 +817,7 @@ Visualisation Bivariée quanti [plot & lm & abline]
 
 On peut facilement ajouter la droite de regression
 
-```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,fig.height=8}
 plot(EP10~ET10,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant à 10 ans, taille à 10 ans
 abline(lm(EP10 ~ ET10,data = famil),cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3)
 ```
@@ -795,14 +855,14 @@ Visualisation Bivariée quali x quanti [boxplot]
 
 Si l'on veut croiser variables qualitatives et quantitatives, on peut utiliser les boites 
 
-```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,fig.height=10}
 boxplot(EP0~ESx,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant vs sexe
 ```
 
 Visualisation Bivariée quali x quanti [boxplot]
 ========================================================
 
-```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,fig.height=10}
 boxplot(EP0~MCig0,data=famil,cex.lab=3, cex.axis=3, cex.main=3, cex.sub=3,cex=3) # poids de l'enfant vs consommation de cigarettes
 ```
 
@@ -837,6 +897,13 @@ On s'intéresse à l'influence du sexe sur la taille à la naissance. Tester l'�
 # Normalité des distributions (facultatif car n grand ici)
 shapiro.test(famil[famil$ESx=="M","ET0"]) 
 shapiro.test(famil[famil$ESx=="F","ET0"])
+```
+
+Test de liaison [var.test]
+========================================================
+On s'intéresse à l'influence du sexe sur la taille à la naissance. Tester l'égalité des deux moyennes nécessite de vérifier préalablement plusieurs points : la normalité des distributions dans chaque classe à moins que l'échantillon soit considéré de taille suffisamment grande, le caractère indépendant ou appariés des échantillons, l'égalité ou non des variances à l'intérieur de chaque groupe. On dispose de deux échantillons indépendants : les garçons et les filles. Testons les autres hypothèses.
+
+```{r message=FALSE, warning=FALSE}
 # égalité des variances (test de Fisher)
 var.test(ET0~ESx,data=famil)
 ```
@@ -847,7 +914,13 @@ Le test de comparaison des moyennes à utiliser (Student vs. Welsh) dépend du r
 
 ```{r message=FALSE, warning=FALSE}
 t.test(ET0~ESx,var.equal=F, data=famil) # si les variances sont différentes c'est un test de Welsh
+```
 
+Test de liaison [t.test]
+========================================================
+Le test de comparaison des moyennes à utiliser (Student vs. Welsh) dépend du résultat précédent concernant l'égalité des variances.
+
+```{r message=FALSE, warning=FALSE}
 t.test(ET0~ESx,var.equal=T, data=famil) # Dans le cas où elles sont considérées égales, c'est un test de Student.
 ```
 
@@ -1028,6 +1101,10 @@ factoextra::fviz_pca_ind(res.pca,
              )
 ```
 
+Exercice 2
+========================================================
+type:section
+
 Exploration des données d'urgence - Intro
 ========================================================
 Cet exercice mobilise l'enquête nationale sur les structures des urgences hospitalières 2013. Un jour donné, le 11 juin 2013 de 8h à 8h le 
@@ -1052,6 +1129,10 @@ urgences2 <- read.xlsx("enq_urgences_structure.xls",1) # 1 correspond ici à la 
 head(urgences2) # aperçu du haut des données
 dim(urgences2)
 ```
+
+Exercice 3
+========================================================
+type:section
 
 Exploration des données d'urgence - Dictionnaire
 ========================================================
@@ -1134,9 +1215,11 @@ library(plotly)
 p<-ggplotly(p)#https://stackoverflow.com/questions/41187823/error-in-filecon-rb-cannot-open-the-connection-when-generating-a-plot-in
 htmlwidgets::saveWidget(as.widget(p), file = "volume_de_patients.html")#Cette ligne de code et l'iframe en dessous permettent de faire fonctionner plotly dans le contexte de la presentation
 ```
+Graphique dynamique avec [ggplotly]
+========================================================
 <iframe src="volume_de_patients.html" style="position:absolute;height:100%;width:100%"></iframe>
 
-Suppression des valeurs manquantes [na.omit]
+Suppression des valeurs manquantes [is.na & %in%]
 ========================================================
 On va désormais transformer cette variable en variable qualitative pour rassembler les établissements de taille similaire 
 
@@ -1145,6 +1228,13 @@ valeurs_manquantes <- is.na(urgences$ID_A103) # on regarde si la variable admet 
 head(valeurs_manquantes)
 (TRUE %in% valeurs_manquantes) # c'est le cas 
 sum(valeurs_manquantes) # nb de valeurs manquantes
+```
+
+Suppression des valeurs manquantes [na.omit]
+========================================================
+On va désormais transformer cette variable en variable qualitative pour rassembler les établissements de taille similaire 
+
+```{r message=FALSE, warning=FALSE}
 dim(urgences)
 urgences <- na.omit(urgences) # si on veut retirer toutes les lignes avec au moins une valeur manquante (pas toujours souhaitable)
 dim(urgences)
@@ -1152,6 +1242,8 @@ dim(urgences)
 
 Regroupement des établissements par volume de patients [cut]
 ========================================================
+On va désormais transformer cette variable en variable qualitative pour rassembler les établissements de taille similaire 
+
 ```{r message=FALSE, warning=FALSE}
 # on crée une nouvelle colonne
 urgences$nb_passages_3 <- cut(urgences$ID_A103, breaks = c(0,40,80,max(urgences$ID_A103, na.rm=T))) # max, comme la plupart des fonctions renverra une erreur si appliqué sur un vecteur contenant des NA, on les enlève pour le calcul avec l'option na.rm 
@@ -1176,22 +1268,23 @@ head(horaire_8)
 Volume de patient ventilé par tranche horaire [prep]
 ========================================================
 ```{r message=FALSE, warning=FALSE}
-
-#on rajoute une colonne d'heure 
-horaire_8$heure <- '8h'
+horaire_8$heure <- '8h'#on rajoute une colonne d'heure 
 horaire_12$heure <- '12h'
 horaire_18$heure <- '18h'
 horaire_22$heure <- '22h'
 horaire_8_$heure <- '8h_'
-
 #pour pouvoir empiler les 5 tables il faut qu'elles aient les mêmes noms de colonnes 
 names(horaire_8) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
 names(horaire_12) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
 names(horaire_18) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
 names(horaire_22) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
 names(horaire_8_) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
-
 urgences2 <- rbind(horaire_8, horaire_12, horaire_18, horaire_22, horaire_8_) # on les empile avec rbind
+```
+
+Volume de patient ventilé par tranche horaire [check]
+========================================================
+```{r message=FALSE, warning=FALSE}
 dim(urgences)
 dim(urgences2)
 head(urgences2)
@@ -1223,6 +1316,9 @@ p<-ggplot(data = urgences2, aes(x=heure, y=ID_92, color=nb_passages_3)) + geom_b
 p<-ggplotly(p)
 htmlwidgets::saveWidget(as.widget(p), file = "effectif_urgentiste.html")
 ```
+
+Volume de patient ventilé par tranche horaire [ggplot]
+========================================================
 <iframe src="effectif_urgentiste.html" style="position:absolute;height:100%;width:100%"></iframe>
 
 
@@ -1237,16 +1333,21 @@ grouped_mean <- summarise(grouped, mean=mean(ID_92, na.rm = T))
 head(grouped_mean)
 
 # les deux actions peuvent être réalisées dans la foulée avec l'opérateur %>%
-grouped_mean <- urgences2 %>% group_by(heure, nb_passages_3) %>% summarise(mean=mean(ID_92, na.rm = TRUE))
-head(grouped_mean)
+grouped_mean <- urgences2 %>% group_by(heure, nb_passages_3) %>% summarise(mean=mean(ID_92, na.rm = T))
 ```
 
 
 Volume de patient ventilé par tranche horaire [ggplot]
 ========================================================
 ```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
-                                                                                        
-ggplot(data = grouped_mean, aes(x=heure, y=mean, group = nb_passages_3, color = nb_passages_3)) + geom_line() + geom_point()
+g <- ggplot(data = grouped_mean, 
+       aes(x=heure, 
+           y=mean, 
+           group = nb_passages_3, 
+           color = nb_passages_3)) + 
+  geom_line() + 
+  geom_point() 
+g + theme(legend.text = element_text(size = 20),text = element_text(size = 20))
 ```
 Remarque : les fonctionnalités du packages `dplyr` sont bien plus riches, allez jeter un oeil à la cheatsheet data wrangling french fournie dans le dossier de la formation.
 
@@ -1260,6 +1361,13 @@ urgences_ps <- urgences2[,c('index_structure','nb_passages_3','heure','ID_90','I
 names(urgences_ps)[4:length(urgences_ps)] <-c('med urgentistes', 'med non urgentistes','internes','médecins int et ext', 'cadres','IDE','AS','ASH','secrétaires','brancardiers') # on rend les colonnes plus intelligibles
 library(reshape)
 urgences_ps <- melt(urgences_ps, id=c("index_structure","nb_passages_3",'heure')) 
+```
+
+Ventilation par type de personnel de soin [prep]
+========================================================
+Maintenant on va regarder l'évolution de la distribution des effectifs de personnels dans le temps, sans se limiter aux médecins urgentistes. Pour présenter les différents graphiques côte à côte, on va utiliser l'option `facet` de `ggplot2` mais avant cela, il faut retravailler encore la forme des données. Commençons par regarder les distributions d'effectifs de professionnels, donc les variables de 90 à 101, que l'on va rendre plus intelligible dans un premier temps.
+
+```{r message=FALSE, warning=FALSE}
 head(urgences_ps)
 names(urgences_ps)[4:5] <-c('PS','effectif')
 head(urgences_ps)
@@ -1267,17 +1375,25 @@ head(urgences_ps)
 
 Ventilation par type de personnel de soin [facet]
 ========================================================
-On a donc créé une variable PS (pour professionnel de santé) qui prend plusieurs modalités et on a, pour chaque structure d'urgence identifiée par l'identifiant ID_A2, une ligne par profession avec les effectifs correspondants. Cette représentation rend la représentation graphique quasi immédiate avec `ggplot2`
+On a donc créé une variable `PS` (pour professionnel de santé) qui prend plusieurs modalités et on a, pour chaque structure d'urgence identifiée par l'identifiant `ID_A2`, une ligne par profession avec les `effectif`s correspondants. Cette représentation rend la représentation graphique quasi immédiate avec `ggplot2`
 
-```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20}
+```{r message=FALSE, warning=FALSE}
 urgences_ps$heure = factor(urgences_ps$heure , levels=c("8h", "12h", "18h", "22h", "8h_")) # on transforme la variable en facteur et on ordonne les heures
-ggplot(urgences_ps, aes(x=PS, y=effectif, fill=PS)) + geom_bar(stat = "identity") + facet_grid(as.factor(heure) ~ nb_passages_3) + theme(axis.ticks.x=element_blank(),axis.text.x=element_blank())
+g <- ggplot(urgences_ps, aes(x=PS, y=effectif, fill=PS)) + geom_bar(stat = "identity") + facet_grid(as.factor(heure) ~ nb_passages_3) + theme(axis.ticks.x=element_blank(),axis.text.x=element_blank(),legend.text = element_text(size = 20),text = element_text(size = 20))
 # theme permet de retirer la légende sous l'axe des x, si vous retirez ce bout de code vous verrez la différence
 # facet_grid permet de produire plusieurs graphiques en fixant une variable ici le nombre de passage ou l'heure de pointage
 ```
 
-Variante - EXERCICE
+Ventilation par type de personnel de soin [facet]
 ========================================================
+
+```{r message=FALSE, warning=FALSE,fig.align="center",fig.width=20,fig.height=12,echo=F}
+g
+```
+
+Variante - Exercice 4
+========================================================
+type:section
 <b>Le même exercice peut être réalisé pour la distribution des types de patients, à vous de jouer</b>
 
 Ouvrir une table SAS
