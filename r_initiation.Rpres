@@ -725,6 +725,8 @@ Une  étude réalisée  entre  1961  et  1973  dans  la  maternité  d'un  hôpi
 -  sur l'évolution du poids de la mère en 10 ans,
 -  sur les liaisons entre les caractéristiques des parents (poids, taille, rhésus) et celles de leur enfant
 
+Exercice sur des données - Introduction
+========================================================
 <center><img src="list_var.png"/></center>
 
 Chargement de données [read.csv2]
@@ -1257,11 +1259,24 @@ Volume de patient ventilé par tranche horaire [prep]
 On voudrait maintenant regarder le nombre de patients ou les effectifs par tranche horaire, on voit bien qu'il serait plus facile d'avoir une variable tranche horaire que de considérer des colonnes différentes contenant tantôt un A, un B, un C etc... On va récupérer les colonnes correspondant à chaque horaire, les renommer, puis de les empiler en créant une colonne horaire 
 
 ```{r message=FALSE, warning=FALSE}
-horaire_8 <- urgences[,c(paste('ID_','A',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')] # sélection des colonnes contenant un A pour chaque établissement
-horaire_12 <- urgences[,c(paste('ID_','B',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
-horaire_18 <- urgences[,c(paste('ID_','C',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
-horaire_22 <- urgences[,c(paste('ID_','D',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
-horaire_8_ <- urgences[,c(paste('ID_','E',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]
+#NB : on doit transformer les facteurs en character pour pouvoir les empiler sinon des NA seront générés
+horaire_8 <- urgences[,c(paste('ID_','A',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]%>%
+  mutate_if(is.factor,as.character) # sélection des colonnes contenant un A pour chaque établissement
+horaire_12 <- urgences[,c(paste('ID_','B',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]%>%
+  mutate_if(is.factor,as.character) # sélection des colonnes contenant un B pour chaque établissement
+horaire_18 <- urgences[,c(paste('ID_','C',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]%>%
+  mutate_if(is.factor,as.character) # sélection des colonnes contenant un C pour chaque établissement
+horaire_22 <- urgences[,c(paste('ID_','D',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]%>%
+  mutate_if(is.factor,as.character) # sélection des colonnes contenant un D pour chaque établissement
+horaire_8_ <- urgences[,c(paste('ID_','E',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2')]%>%
+  mutate_if(is.factor,as.character) # sélection des colonnes contenant un E pour chaque établissement
+```
+
+Volume de patient ventilé par tranche horaire [prep]
+========================================================
+On voudrait maintenant regarder le nombre de patients ou les effectifs par tranche horaire, on voit bien qu'il serait plus facile d'avoir une variable tranche horaire que de considérer des colonnes différentes contenant tantôt un A, un B, un C etc... On va récupérer les colonnes correspondant à chaque horaire, les renommer, puis de les empiler en créant une colonne horaire 
+
+```{r message=FALSE, warning=FALSE}
 head(horaire_8)
 ```
 
@@ -1274,12 +1289,14 @@ horaire_18$heure <- '18h'
 horaire_22$heure <- '22h'
 horaire_8_$heure <- '8h_'
 #pour pouvoir empiler les 5 tables il faut qu'elles aient les mêmes noms de colonnes 
-names(horaire_8) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
-names(horaire_12) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
-names(horaire_18) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
-names(horaire_22) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
-names(horaire_8_) <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
-urgences2 <- rbind(horaire_8, horaire_12, horaire_18, horaire_22, horaire_8_) # on les empile avec rbind
+common_names <- c(paste('ID_',c(87:90,92:101), sep =''),'ID_A103','ID_A4','nb_passages_3','ID_A2','heure')
+names(horaire_8) <- common_names
+names(horaire_12) <- common_names
+names(horaire_18) <- common_names
+names(horaire_22) <- common_names
+names(horaire_8_) <- common_names
+urgences2 <- rbind(horaire_8, horaire_12, horaire_18, horaire_22, horaire_8_)%>%mutate_if(is.character,factor) # on les empile avec rbind
+# urgences2[apply(urgences2,1,function(x)sum(is.na(x))>0),]
 ```
 
 Volume de patient ventilé par tranche horaire [check]
@@ -1351,6 +1368,19 @@ g + theme(legend.text = element_text(size = 20),text = element_text(size = 20))
 ```
 Remarque : les fonctionnalités du packages `dplyr` sont bien plus riches, allez jeter un oeil à la cheatsheet data wrangling french fournie dans le dossier de la formation.
 
+Ventilation par type de personnel de soin [prep]
+========================================================
+Maintenant on va regarder l'évolution de la distribution des effectifs de personnels dans le temps, sans se limiter aux médecins urgentistes. Pour présenter les différents graphiques côte à côte, on va utiliser l'option `facet` de `ggplot2` mais avant cela, il faut retravailler encore la forme des données. Commençons par regarder les distributions d'effectifs de professionnels, donc les variables de 90 à 101, que l'on va rendre plus intelligible dans un premier temps.
+
+```{r message=FALSE, warning=FALSE,echo=F}
+urgences_ps <- urgences2[,c('index_structure','nb_passages_3','heure','ID_90','ID_92','ID_93','ID_94','ID_95','ID_96','ID_97','ID_98','ID_99','ID_100','ID_101')]
+names(urgences_ps)[4:length(urgences_ps)] <-c('med urgentistes', 'med non urgentistes','internes','médecins int et ext', 'cadres','IDE','AS','ASH','secrétaires','brancardiers') # on rend les colonnes plus intelligibles
+library(reshape)
+urgences_ps <- melt(urgences_ps, id=c("index_structure","nb_passages_3",'heure')) 
+head(urgences2[,c('index_structure','nb_passages_3','heure','ID_90','ID_92','ID_93','ID_94','ID_95','ID_96','ID_97','ID_98','ID_99','ID_100','ID_101')],3)
+names(urgences_ps)[4:5] <-c('PS','effectif')
+head(urgences_ps%>%filter(index_structure%in%c("010005239","010780054")))
+```
 
 Ventilation par type de personnel de soin [prep]
 ========================================================
@@ -1368,9 +1398,8 @@ Ventilation par type de personnel de soin [prep]
 Maintenant on va regarder l'évolution de la distribution des effectifs de personnels dans le temps, sans se limiter aux médecins urgentistes. Pour présenter les différents graphiques côte à côte, on va utiliser l'option `facet` de `ggplot2` mais avant cela, il faut retravailler encore la forme des données. Commençons par regarder les distributions d'effectifs de professionnels, donc les variables de 90 à 101, que l'on va rendre plus intelligible dans un premier temps.
 
 ```{r message=FALSE, warning=FALSE}
-head(urgences_ps)
 names(urgences_ps)[4:5] <-c('PS','effectif')
-head(urgences_ps)
+head(sample(urgences_ps),15)
 ```
 
 Ventilation par type de personnel de soin [facet]
