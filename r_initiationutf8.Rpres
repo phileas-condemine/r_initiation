@@ -1,0 +1,653 @@
+Initiation à R
+========================================================
+author: DREES
+date: `r Sys.Date()`
+autosize: true
+
+Qu'est ce que R ?
+========================================================
+
+### R (https://www.r-project.org/) est un langage de programmation dédié à l'analyse statistique.
+### Libre et gratuit, disponible sur toutes les plateformes (Mac OS, Windows, Linux), il s'est largement imposé ces dernières années dans le domaine des sciences humaines et de la datascience.
+### R dispose par défaut d'instructions de base permettant de réaliser les opérations les plus courantes.
+### De nouvelles fonctionnalités, regroupées en packages, peuvent être facilement ajoutées pour venir enrichir les possibilités du langage.
+### Le point fort de R par rapport à des logiciels à interfaces graphiques, est qu'il permet très facilement l'automatisation et la reproductibilité des traitements.
+
+Environnement de travail
+========================================================
+
+### Rstudio (https://www.rstudio.com/) est un environnement de travail permettant d'écrire du code R. 
+### Il ne s'agit pas d'un environnement clic bouton mais d'une véritable interface de développement (IDE) destiné à écrire du code. 
+### Il s'agit en fait d'une couche logiciel permettant d'écrire, d'exécuter et de visualiser les résultats d'un programme écrit dans le langage R. 
+### RStudio n'est pas indispensable pour utiliser R. Néanmoins,  il est très pratique et très bien fait.
+
+Répertoire par défaut
+========================================================
+Le menu Session > Set Working Directory permet de sélectionner le répertoire par défaut contenant vos scripts et éventuels fichiers de données.<br>
+Vous pouvez également le modifier via une ligne de code :
+
+```{r message=TRUE, warning=FALSE}
+setwd('C:/Users/phileas.condemine/Documents/R_initiation/')
+```
+
+Une autre approche, souvent préférable, est l'utilisation des projets.<br>
+Le bouton situé en haut à droite de l'environnement RStudio permet de gérer les projets.<br>
+Dans un projet l'environnement de travail est automatiquement défini comme le lieu d'emplacement du projet (fichier .Rproj).<br>
+Le fichier en lui même est très simple mais peut-être paramétré.
+```{r}
+print(readLines("R_initiation.Rproj"))
+```
+
+Quelques raccourcis dans RStudio
+========================================================
+<ul>
+<li> [ctrl+entrée] pour compiler une ligne, vous pouvez placer le curseur dessus et cliquer sur Run, ou bien utiliser le raccourci clavier .
+<li> [TAB] pour utiliser l'autocomplétion d'un nom de fonction, de variable ou de fichier (si des entre guillements "")
+<li> [Ctrl + Shift + 1] Pour ouvrir le code en plein écran, refaire le même raccourci pour revenir à l'affichage 4 fenêtres
+<li> [Ctrl + Shift + 2] Pour ouvrir la console en plein écran, refaire le même raccourci pour revenir à l'affichage 4 fenêtres
+<li> [Ctrl + Alt + i] Pour créer un nouveau chunk de code R dans un fichier .Rmd ou .Rpres
+</ul>
+
+
+Objets et formats en théorie
+========================================================
+### Sous R, les éléments de base sont des objets : 
+<ul>
+<li>vecteurs, 
+<li>matrices, 
+<li>listes, 
+<li>table appelées <b>data.frame</b> ...
+</ul>
+### Ces objets peuvent contenir des éléments de type 
+<ul>
+<li>numérique, 
+<li>booléen (logical : TRUE, FALSE), 
+<li>chaîne de caractère (string), 
+<li>facteur (factor, pour les variables qualitatives prenant un nombre déterminé de modalités). 
+</ul>
+### La différence entre la table de données (data.frame) et la matrice tient notamment dans le fait que la première peut contenir des éléments de types différents. 
+
+
+
+Nombres - Opérations simples
+========================================================
+
+On commence par créer des éléments pour illustrer les opérations de base en R.<br>
+Le signe `<-` est très souvent équivalent à `=`<br>
+Ils permettent d'assigner un contenu à une variable dont on indique le nom à gauche.
+On peut ensuite avoir un aperçu de ces variables dans l'onglet Environment (par défaut en haut à droite).
+```{r message=FALSE, warning=FALSE}
+element_a <- 2
+element_a
+element_b <- 3
+element_b
+element_c <- element_a/2 + 2*element_b # les opérations -, *, /, sqrt pour racine, ^ pour puissance, log, exp, sont également possibles !
+element_c
+```
+
+Vecteurs - Création et combinaison
+========================================================
+On peut travailler très naturellement sur des vecteurs<br>
+Le vecteur est le format par défaut en R. Un nombre seul ie un scalaire est un vecteur de taille 1.<br>
+c() veut dire combine parce que cet opérateur permet de combiner des vecteurs (y compris de taille 1).
+
+```{r message=FALSE, warning=FALSE}
+vecteur_a <- c(2,3,5) 
+vecteur_a
+```
+
+```{r message=FALSE, warning=FALSE}
+vecteur_b <- c(-1,0,1)
+vecteur_b
+```
+
+```{r message=FALSE, warning=FALSE}
+vecteur_c <- c(vecteur_a,27,vecteur_b) 
+vecteur_c
+```
+
+Vecteurs - Indexation et sous-vecteur
+========================================================
+L'indexation en R commence à 1 contrairement à l'indexation en Python qui commence à 0.<br>
+On peut récupérer un ou plusieurs éléments d'un vecteur avec l'opérateur `[` <br>
+
+```{r message=FALSE, warning=FALSE}
+vecteur_a
+vecteur_a[1] #on commence à numéroter à partir de 1 (et non de zéro)
+vecteur_a[c(1,3)]
+```
+
+Vecteurs - Fonctions de création de vecteurs
+========================================================
+Dans le cas où le vecteur correspond à une séquence de nombres, on peut utiliser une syntaxe particulière
+
+```{r message=FALSE, warning=FALSE}
+vecteur_a <- c(2,3,4) 
+vecteur_b <- 2:4
+vecteur_c <- seq(2,4,1) #seq(from = 2,to = 4,by = 1)  (à partir de 2, jusqu'à 4, avec un pas de 1)
+```
+Remarque, si on ne sait plus la signification des trois arguments de `seq`, on peut aller dans l'aide avec `?seq` <br>
+
+
+Un vecteur peut également être généré à partir d'un tirage aléatoire
+
+```{r message=FALSE, warning=FALSE}
+vecteur_d <- sample(1:10,6)#sample(x = 1:10,size = 6) on tire 6 nombres dans le vecteur 1:10
+vecteur_d
+```
+
+Cette fonction permet aussi de mélanger un vecteur
+```{r message=FALSE, warning=FALSE}
+sample(vecteur_d)
+```
+
+
+Vecteurs - Opérations simples
+========================================================
+Les opérations sur les vecteurs sont très proches des opérations sur les éléments. <br>
+Une opération entre un vecteur a et un vecteur b revient à réaliser l'opération entre les couples d'éléments issus des deux vecteurs et situés à la même place (il faut que les vecteurs aient la même taille pour que ça ait un sens). <br>
+
+```{r message=FALSE, warning=FALSE}
+vecteur_a == vecteur_b # compare les éléments un à un
+variable_logique_a <- vecteur_a == vecteur_b
+```
+
+Vecteurs - Opérations simples
+========================================================
+Si la taille d'un vecteur est multiple de la taille de l'autre, les opérations fonctionnent mais il faut en comprendre la logique.
+
+```{r message=FALSE, warning=FALSE}
+vecteur_e = sample(2:4,9,replace = T)
+vecteur_e
+vecteur_a
+vecteur_e == vecteur_a # compare chaque élément à une même valeur
+vecteur_e == 3
+```
+
+Cette souplesse du langage R est avantageuse mais peut être dangereuse en cas d'ambiguité.
+
+Vecteurs - Opérations simples
+========================================================
+```{r message=FALSE, warning=FALSE}
+vecteur_c
+vecteur_c <- 2*vecteur_c # on écrase la valeur du vecteur_c
+vecteur_c
+vecteur_c + vecteur_a/2 # exemple d'opération entre deux vecteurs
+```
+Le vecteur d'entiers est devenu un vecteur de décimaux.
+
+Vecteurs - Fonctions de base
+========================================================
+Le vecteur est caractérisé notamment par sa taille 
+
+```{r message=FALSE, warning=FALSE}
+length(vecteur_a)
+```
+
+Il peut-être trié :
+
+```{r message=FALSE, warning=FALSE}
+vecteur_d <- c(3,1,2,0)
+ordre=order(vecteur_d)#Ceci nous donne l'ordre des indices
+ordre
+vecteur_d[ordre]
+sort(vecteur_d)
+```
+
+Listes - Création
+========================================================
+
+```{r message=FALSE, warning=FALSE}
+liste_a <- list(2,3,5)
+liste_a
+liste_a[[2]]
+liste_b <- list(sexe = 2, age = 3, salaire = 5)
+liste_b$salaire # si on donne des noms aux éléments de la liste, on peut les récupérer via l'opérateur $
+```
+
+Listes - Combinaison
+========================================================
+
+Pour concaténer deux listes 
+
+```{r message=FALSE, warning=FALSE}
+liste_a
+liste_a <- append(liste_a, element_a) # ou liste_b à la place de element_a pour concaténer deux listes
+liste_a
+```
+
+Listes - Liste de listes
+========================================================
+
+Pour concaténer deux listes 
+
+```{r message=FALSE, warning=FALSE}
+lliste_a <- list(liste_a, element_a) # ou liste_b à la place de element_a pour concaténer deux listes
+lliste_a
+```
+
+
+Listes - Fonctions de bases
+========================================================
+La fonction `length` convient aussi pour les listes 
+
+```{r message=FALSE, warning=FALSE}
+length(liste_a)
+```
+
+On peut passer de la liste au vecteur avec la fonction `unlist()` <br>
+
+```{r message=FALSE, warning=FALSE}
+unlist(liste_a)
+```
+
+Tout est mis à plat, remarquer le comportement de `unlist()` pour la liste de listes.
+
+```{r message=FALSE, warning=FALSE}
+unlist(lliste_a)
+```
+
+Matrices - Création
+========================================================
+```{r message=FALSE, warning=FALSE}
+matrice_a <- matrix(1:15,ncol=5) # exemple d'une matrice remplie des chiffres consécutifs de 1 à 15 rangés sur 5 colonnes 
+matrice_a
+head(matrice_a) # la fonction head permet de visualiser un extrait des données, ici elles sont petites donc c'est la totalité
+matrice_a[1,2] # pour récupérer l'élément de la première ligne et de la deuxième colonne 
+```
+
+Matrices - Opérations simples
+========================================================
+Par défaut, les opérations mathématiques simples se font élément par élément 
+
+```{r message=FALSE, warning=FALSE}
+matrice_b <- 3*matrice_a
+matrice_a
+matrice_b
+matrice_b - matrice_a # les opérations se font éléments par élément
+``` 
+
+Matrices - Fonctions de base
+========================================================
+Les dimensions de la matrice peuvent être obtenues de la manière suivante :
+
+```{r message=FALSE, warning=FALSE}
+nrow(matrice_a)
+ncol(matrice_a)
+dim(matrice_a)
+```
+
+Matrices - Fonctions de base
+========================================================
+Pour concaténer deux matrices, on peut 
+<ul>
+<li>Soit les mettre côte à côte (`cbind`). Ici c veut dire colonne. 
+<li>Soit les empiler (`rbind`). Ici r veut dire row donc ligne.
+</ul>
+Ces fonctions fonctionnent aussi pour les data.frames.
+
+```{r message=FALSE, warning=FALSE}
+matrice_c <- cbind(matrice_a, matrice_b)
+matrice_c
+matrice_d <- rbind(matrice_a, matrice_b)
+matrice_d
+dim(matrice_d)
+``` 
+
+Matrices - Produits
+========================================================
+```{r message=FALSE, warning=FALSE}
+matrice_b*matrice_a # cette opération réalise le produit élément par élément et non le produit matriciel. Les matrices doivent être de mêmes dimensions.
+t(matrice_b)%*% matrice_a # pour faire des vrais produits matriciels, on utilise l'opérateur %*%, ici t() indique que l'on prend également la transposée
+``` 
+
+
+
+
+Data.frame - Création
+========================================================
+Les tables de données ou data.frame est sans doute le format qu'on utilisera le plus dans la suite. 
+
+```{r message=FALSE, warning=FALSE}
+df_a <- as.data.frame(matrice_a) # on commence par transformer la matrice en data.frame, l'opération symétrique as.matrix() est possible
+head(df_a) 
+names(df_a) # ici le data.frame provient de la conversion d'une matrice, il n'y a donc pas de noms de colonnes à part ceux qui sont donnés par défaut V1, V2...
+names(df_a) <- c('a','b','c','d','e') # on peut changer le nom des colonnes simplement
+names(df_a)
+```
+
+Data.frame - Indexation et extraction
+========================================================
+
+Pour récupérer de l'information dans la table de données, on peut procéder de différentes manières 
+
+```{r message=FALSE, warning=FALSE}
+df_a$b # avec l'opérateur $, on peut récupérer directement la colonne b
+df_a[['b']] # revient au même
+df_a[[2]] # correspond également car il s'agit de la 2e colonne
+df_a$e <- 1 # permet de construire une nouvelle colonne e remplie de 1 
+head(df_a)
+```
+
+Data.frame - Indexation et extraction
+========================================================
+
+```{r message=FALSE, warning=FALSE}
+df_a$f <- df_a$a + df_a$b # permet de construire une nouvelle colonne qui serait la somme des deux premières, les opération -, *, /, sqrt pour racine carrée, log, exp, ^, sont également possibles ! 
+head(df_a)
+df_a$f <- sqrt(df_a$a) + df_a$b^2 # permet de construire une nouvelle colonne qui serait la somme des deux premières, les opération -, *, /, sqrt pour racine 
+df_a$f
+```
+
+Formats en pratique
+========================================================
+Vérifions le type de ces objets avec la fonction `class`
+
+```{r message=FALSE, warning=FALSE}
+class(element_a)
+class(vecteur_a)
+class(variable_logique_a)
+class(liste_a)
+class(matrice_a)
+class(df_a)
+```
+
+Environment - consultation et suppression
+========================================================
+`ls` = list segments
+`rm` = remove
+
+Ces verbes sont hérités de `bash`/`cmd`
+
+Nous avons créé un certain nombre de variables qui sont disponibles dans votre environnement (généralement en haut à droite par défaut)
+On peut aussi utiliser la fonction `ls` pour voir la liste des objets dont on dispose, et `rm` pour en supprimer.
+
+```{r message=FALSE, warning=FALSE}
+ls()
+rm(element_a)
+ls()
+```
+
+Boucles - Cas d'usage
+========================================================
+Reprenons le cas où on a un data.frame simple.<br>
+On veut calculer la moyenne, la somme, le maximum et le minimum de chaque colonne. <br>
+Une manière de le faire serait de faire une <b>boucle</b> sur le nombre de colonnes et d'appliquer la fonction 
+<ul>
+<li>`mean`
+<li>`sum`
+<li>`max`
+<li>`min`
+</ul>
+à chaque colonne tour à tour.
+
+
+Boucles - for (i in vec){fonction(i)}
+========================================================
+```{r message=FALSE, warning=FALSE}
+nb_col <- ncol(df_a) 
+mean_col <- NULL # on commence par créer une variable vide, dans laquelle on va ajouter itérativement les moyenne de chaque colonne
+for (i in 1:nb_col){
+  print(paste("numéro de la variable :",i))
+  mean_temp <- mean(df_a[[i]])
+  print(paste("moyenne de la variable i:",mean_temp))
+  mean_col <- c(mean_col, mean_temp)
+  print(paste("vecteur des moyennes",mean_col))
+  print(paste("vecteur des moyennes",paste(mean_col,collapse = " ")))#Attention paste(), comme la plupart des fonctions R est vectorielle, elle essaie donc de s'appliquer au vecteur élément par élément
+  print('---------')}
+``` 
+
+
+Boucles - apply(vec, fonction)
+========================================================
+
+En réalité, les boucles sont à éviter en R, elles ne sont pas efficaces.<br>
+on leur préférera les fonctions de la famille `apply`. <br>
+Par exemple la fonction `lapply` qui distribue la fonction souhaitée sur chaque élément d'une liste (et retourne une liste). Un data.frame peut-être vu comme une liste de vecteurs. 
+<ul>
+<li> apply sur un data.frame, s'applique sur les lignes, les colonnes ou chaque élément, essaie de renvoyer un data.frame
+<li> lapply, l comme liste, essaie de renvoyer une liste.
+<li> sapply, s comme simplify, plus souple que lapply.
+<li> rapply, r comme recursif, version recursive de lapply.
+<li> mapply pour une version multivariée de sapply.
+</ul>
+
+
+Boucles - sapply() et lapply()
+========================================================
+```{r message=FALSE, warning=FALSE}
+mean_col <- sapply(df_a, mean) # sapply procède de même mais renvoie un vecteur
+mean_col
+mean_col <- lapply(df_a, mean) # ici la fonction est particulièrement simple car mean est déjà une fonction R
+mean_col
+```
+
+Boucles - sapply() sur une fonction définie par l'utilisateur
+========================================================
+Admettons qu'on cherche à appliquer une fonction personnalisée 
+
+```{r message=FALSE, warning=FALSE}
+mean_personnalisee <- function(vect){
+  return(sum(vect)/length(vect))
+}
+```
+
+
+```{r message=FALSE, warning=FALSE}
+mean_col <- sapply(df_a, function(vect) mean_personnalisee(vect))
+mean_col
+```
+
+Boucles - lapply() sur une fonction définie par l'utilisateur
+========================================================
+Appliquée sur un vecteur, `lapply` le convertit en liste, on peut repasser à un format vecteur avec la fonction `unlist`
+
+```{r message=FALSE, warning=FALSE}
+fonction_personnalisee <- function(x){
+  return(x*log(x))
+}
+```
+
+```{r message=FALSE, warning=FALSE}
+vecteur_a_transforme <- lapply(vecteur_a, function(x) fonction_personnalisee(x))
+class(vecteur_a_transforme)
+vecteur_a_transforme
+unlist(vecteur_a_transforme)
+vecteur_a*log(vecteur_a) # aurait marché aussi !
+```
+
+Boucles - apply() sur les lignes, les colonnes, les éléments
+========================================================
+`apply` s'applique aussi à des matrices, on indique alors si la fonction à distribuer doit être distribuée en ligne ou en colonne 
+
+```{r message=FALSE, warning=FALSE}
+matrice_a
+apply(matrice_a,1,sum) # ici on applique la fonction somme, autrement dit on somme les éléments par ligne
+apply(matrice_a,2,sum) # par colonne
+apply(matrice_a,c(1,2),sqrt) # pour chaque élément
+```
+
+Condition - if() else()
+========================================================
+
+La syntaxe de la condition est très proche de celle de la boucle, sauf que l'on remplace `for` par `if`
+
+```{r message=FALSE, warning=FALSE}
+fonction_personnalisee <- function(x){
+  if (x>0){res <- x*log(x)}
+  else {res <- 0}
+  return(res)
+}
+```
+
+```{r message=FALSE, warning=FALSE}
+vecteur_d <- c(10,0,-1,2)
+sapply(vecteur_d, function(x) fonction_personnalisee(x))
+abs(vecteur_d) # rmq : abs permet de passer un élément en valeur absolue (s'applique également aux vecteurs sans recours à lapply)
+```
+
+Ici on a inclus la condition dans une fonction, mais ce n'est pas indispensable ! <br>
+
+Condition - if() else()
+========================================================
+On peut vouloir aussi tester la différence `!=` plutôt que l'égalité, `<` ou `>`, et si on a plusieurs conditions, on mettra chacune entre parenthèse et on utilisera `|` pour dire "ou" et `&` pour dire "et" (par exemple `(b-3==a) & (b>=a)`).
+Parfois, on n'a pas besoin de passer par `if` pour appliquer une condition, par exemple si on veut récupérer seulement les éléments de vecteur_d supérieurs ou égaux à 0. Cela revient à dire qu'on teste la condition sur chaque élément et qu'on conserve vecteur_d[i] pour i tel que vecteur_d[i]>=0
+ 
+```{r message=FALSE, warning=FALSE}
+vecteur_d
+vecteur_d[vecteur_d>=0]
+```
+
+Et ça fonctionne aussi avec les data.frames
+
+```{r message=FALSE, warning=FALSE}
+df_a[df_a$a>2] # on ne garde que les colonnes qui vérifient cette condition
+```
+
+Chaînes de caractères - Introduction
+========================================================
+Il arrive que les objets que l'on manipule ne soit pas numériques, on parle alors de `character` ou de `factor`. C'est le cas par exemple des noms de colonnes de `df_a`.<br>
+Le format `character` est le format le plus souple et aussi le plus brouillon (non traité par la plupart des modèles lm, glm, gbm, randomforests...). <br>
+Souvent lorsque le type d'une colonne n'est pas clair, R lui attribura le type character. 
+
+```{r message=FALSE, warning=FALSE}
+class(names(df_a))
+```
+
+On peut aussi réaliser des opérations, par exemple de concaténation. Imaginons que l'on souhaite préciser les noms de colonnes en indiquant qu'il s'agit de département.
+
+```{r message=FALSE, warning=FALSE}
+paste('departement','test',sep='_')
+paste(rep('departement',5), names(df_a),sep='_') 
+names(df_a) <- paste(rep('departement',5), names(df_a),sep='_') # revient à faire apply de paste sur tous les éléments du vecteur names(df_a)
+rep('departement',5) # rep est la fonction qui permet de créer des vecteurs d'une taille donnée contenant toujours le même élément qui pourrait être numérique
+```
+
+Chaînes de caractères - Extraction substr() et strsplit()
+========================================================
+On peut récupérer une partie d'une chaine de caractère simplement 
+
+```{r message=FALSE, warning=FALSE}
+character_a <- 'departement_a' 
+class(character_a)
+substr(character_a,1,10) #les arguments correspondent à la chaine, au début de la sous-chaîne que l'on veut récupérer, et à la fin de la sous-chaîne que l'on veut récupérer
+strsplit(character_a,'_') #les arguments correspondent à la chaine et au caractère qui au niveau duquel on veut couper
+strsplit(character_a,'_')[[1]][[2]] #le résultat est une liste donc on utilise les doubles crochets pour récupérer l'élément qui nous intéresse
+```
+
+Chaînes de caractères - Taille nchar
+========================================================
+La taille d'une chaine de caractères correspond au nombre de caractères 
+
+```{r message=FALSE, warning=FALSE}
+nchar(character_a)
+df_a$dep=c("Paris","Montpellier","Lyon")
+df_a$dep_len=nchar(df_a$dep)
+df_a[,c("dep","dep_len")]
+```
+
+
+Facteurs - Introduction
+========================================================
+
+Les facteurs correspondent aux modalités d'une variable qualitative. 
+
+```{r message=FALSE, warning=FALSE}
+col_df_a <- names(df_a)
+col_df_a_fact <- as.factor(col_df_a)
+is.character(col_df_a_fact)
+class(col_df_a)
+class(col_df_a_fact)
+```
+
+
+Facteurs - Quelques pièges (ajout de modalités)
+========================================================
+
+On ne peut pas rajouter un élément qui n'est pas dans la liste des facteurs naïvement 
+
+```{r message=FALSE, warning=FALSE}
+levels(col_df_a_fact) #liste des modalités de la variable factorielle
+col_df_a_fact <- c(col_df_a_fact, 'departement_z')# attention cette opération a converti col_df_a_fact en character
+class(col_df_a_fact) 
+col_df_a_fact 
+levels(col_df_a_fact) #Seuls les vecteurs de type factor sont vus comme des variables qualitatives
+```
+
+Facteurs - Quelques pièges (conversion)
+========================================================
+```{r message=FALSE, warning=FALSE}
+col_df_a_fact <- as.factor(col_df_a)
+as.character(col_df_a_fact) # parfois on préfère revenir aux chaines de caractères pour éviter ce type de problèmes 
+```
+Si une variable numérique est au format facteur et qu'on veut revenir au format numérique, il faut passer par le format character. Sinon on obtient le numéro de la modalité de chaque élément.
+```{r message=FALSE, warning=FALSE}
+fac <- factor(c(1,12,4,2,3,5))
+levels(fac)
+as.numeric(fac)
+as.numeric(as.character(fac))
+```
+
+Génération d'aléa - tirage multinomial [sample]
+========================================================
+On a souvent besoin de générer des nombres aléatoires, par exemple pour tirer un échantillon dans les lignes d'une table, le plus simple est d'utiliser `sample` : 
+ 
+```{r message=FALSE, warning=FALSE}
+sample(1:100,10,replace=F) # on tire 5 éléments sans remise entre 1 et 100, l'argument replace = TRUE permet de faire un tirage avec remise.
+```
+On peut bien sûr pondérer le tirage
+
+```{r message=FALSE, warning=FALSE, fig.align='center'}
+tirage_pondere<-sample(1:100,10,replace=T,prob=(1/1:100)) #Ainsi on tire surtout des petits nombres
+hist(tirage_pondere)
+```
+
+Génération d'aléa - tirage gaussien [rnorm]
+========================================================
+
+Il est parfois intéressant de simuler des données. Générons 50 observations tirées d'une variable suivant une loi normale de moyenne 20 et d'écart-type 10.
+ 
+```{r message=FALSE, warning=FALSE}
+set.seed(123) # permet de reproduire les mêmes résultats d'une fois sur l'autre en dépit de l'aléa présent
+n <- 50
+Y <- rnorm(n,20,5)
+
+mean(Y) # moyenne empirique
+sd(Y) # écart-type empirique
+sd(Y)/sqrt(length(Y)) # écart-type de la moyenne empirique
+
+summary(Y) # quartiles et moyenne empiriques
+```
+Génération d'aléa - tirage gaussien [boxplot]
+========================================================
+On peut représenter graphiquement cette variable 
+ 
+```{r message=FALSE, warning=FALSE, fig.align='center'}
+boxplot(Y) # diagramme boîte
+```
+
+Génération d'aléa - tirage gaussien [hist]
+========================================================
+On peut représenter graphiquement cette variable 
+ 
+```{r message=FALSE, warning=FALSE, fig.align='center'}
+hist(Y, probability=T, col="blue") # histogramme de la densité
+```
+
+Génération d'aléa - tirage gaussien [boxplot & hist]
+========================================================
+```{r message=FALSE, warning=FALSE, fig.align='center'}
+lines(density(Y), col="red", lwd=2) # lissage de l'histogramme
+# tracer la loi théorique
+x <- 1:100
+curve(dnorm(x,mean=20,sd=5),add=TRUE,col="green",lwd=2) # l'argument add permet de rajouter cette courbe sur le même graphique, il s'agit de la distribution théorique
+```
+
+
+========================================================
+========================================================
+========================================================
+========================================================
+========================================================
+========================================================
+========================================================
